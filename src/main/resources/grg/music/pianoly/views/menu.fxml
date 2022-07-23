@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.layout.FlowPane?>
+
+<FlowPane fx:id="root" alignment="CENTER" columnHalignment="CENTER" orientation="VERTICAL" vgap="20"
+          xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml" fx:controller="grg.music.pianoly.gui.views.MenuView">
+
+    <!--Button fx:id="offGame" prefWidth="200" prefHeight="50" text="Offline Spielen" onAction="#onOffGameClicked"/-->
+    <Button fx:id="settings" prefWidth="200" prefHeight="50" text="Settings" onAction="#onSettingsClicked"/>
+    <Button fx:id="close" prefWidth="200" prefHeight="50" text="Close" onAction="#onCloseClicked"/>
+</FlowPane>
