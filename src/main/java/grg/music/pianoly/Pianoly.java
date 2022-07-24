@@ -12,12 +12,12 @@ public class Pianoly extends Application {
     @Override
     public void start(@NotNull Stage stage) {
 
-        Model model = Model.getInstance();
-        model.init();
+        Model.getInstance();
 
         GUI gui = GUI.getInstance();
         gui.createWindow(stage);
         gui.setPage(Page.MENU);
+
     }
 
     public static void main(String[] args) {

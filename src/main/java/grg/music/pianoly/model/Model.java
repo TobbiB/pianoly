@@ -1,6 +1,7 @@
 package grg.music.pianoly.model;
 
 import grg.music.pianoly.model.midi.MIDI;
+import org.jetbrains.annotations.NotNull;
 
 public final class Model {
 
@@ -11,16 +12,12 @@ public final class Model {
         instance = this;
     }
 
-    public void init() {
-        // TODO
-        System.out.println("model init");
-    }
-
     public void setupMidi() {
         new MIDI();
     }
 
 
+    @NotNull
     public static Model getInstance() {
         return (instance == null) ? new Model() : instance;
     }

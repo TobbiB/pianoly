@@ -9,7 +9,7 @@ import java.util.List;
 public final class MIDI {
 
     private MidiDevice.Info[] available = MidiSystem.getMidiDeviceInfo();
-    private final List<MidiDevice> devices = new LinkedList<>();
+    private final List<Device> devices = new LinkedList<>();
 
     public MIDI() {
         this.connectDevices();
@@ -24,8 +24,8 @@ public final class MIDI {
         for (MidiDevice.Info info : this.available) {
             try {
                 MidiDevice device = MidiSystem.getMidiDevice(info);
-                if (device.getTransmitter() != null && !this.devices.contains(device) && DeviceUtils.verify(device))
-                    this.devices.add(device);
+                if (device.getTransmitter() != null && DeviceUtils.verify(device))
+                    this.devices.add(new Device(device, this.devices.size()));
             } catch (MidiUnavailableException ignored) {
             }
         }

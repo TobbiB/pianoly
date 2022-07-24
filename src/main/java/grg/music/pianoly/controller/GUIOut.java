@@ -5,8 +5,10 @@ import grg.music.pianoly.model.Model;
 
 public class GUIOut implements IGUIOut {
 
+    private final Model model = Model.getInstance();
+
     @Override
     public void connectDevices() {
-        Model.getInstance().setupMidi();
+        model.setupMidi();
     }
 }

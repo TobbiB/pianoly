@@ -7,8 +7,9 @@ import javax.sound.midi.Receiver;
 
 public final class DeviceUtils {
 
-    public static boolean verify(MidiDevice device) {
+    private static final int TIME_OUT_SEC = 5;
 
+    public static boolean verify(MidiDevice device) {
         boolean[] b = {false};
         try {
             device.open();
@@ -29,10 +30,16 @@ public final class DeviceUtils {
         }
         synchronized (Thread.currentThread()) {
             try {
-                Thread.currentThread().wait(5000);
+                Thread.currentThread().wait(TIME_OUT_SEC * 1000);
             } catch (InterruptedException e) {
                 throw new RuntimeException(e);
             }
+        }
+        try {
+            device.getTransmitter().setReceiver(null);
+            device.close();
+        } catch (MidiUnavailableException e) {
+            throw new RuntimeException(e);
         }
         return b[0];
     }
