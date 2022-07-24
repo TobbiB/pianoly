@@ -1,6 +1,10 @@
 package grg.music.pianoly.gui;
 
+import grg.music.pianoly.controller.GUIIn;
+import grg.music.pianoly.controller.GUIOut;
 import grg.music.pianoly.data.Page;
+import grg.music.pianoly.gui.interfaces.IGUIIn;
+import grg.music.pianoly.gui.interfaces.IGUIOut;
 import grg.music.pianoly.gui.window.Window;
 import grg.music.pianoly.gui.window.WindowSettings;
 import javafx.stage.Stage;
@@ -9,6 +13,9 @@ import org.jetbrains.annotations.NotNull;
 public final class GUI {
 
     private static GUI instance;
+
+    private final IGUIOut out = new GUIOut();
+    private final IGUIIn in = new GUIIn();
 
     private Window window;
 
@@ -33,6 +40,18 @@ public final class GUI {
     }
 
 
+    @NotNull
+    public IGUIOut getOut() {
+        return this.out;
+    }
+
+    @NotNull
+    public IGUIIn getIn() {
+        return this.in;
+    }
+
+
+    @NotNull
     public static GUI getInstance() {
         return (instance == null) ? new GUI() : instance;
     }

@@ -14,6 +14,9 @@ public final class Model {
     public void init() {
         // TODO
         System.out.println("model init");
+    }
+
+    public void setupMidi() {
         new MIDI();
     }
 

@@ -1,0 +1,4 @@
+package grg.music.pianoly.gui.interfaces;
+
+public interface IGUIIn {
+}
