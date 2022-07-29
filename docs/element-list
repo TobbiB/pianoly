@@ -1,0 +1,12 @@
+module:grg.music.pianoly
+grg.music.pianoly
+grg.music.pianoly.controller
+grg.music.pianoly.data
+grg.music.pianoly.gui
+grg.music.pianoly.gui.interfaces
+grg.music.pianoly.gui.views
+grg.music.pianoly.gui.window
+grg.music.pianoly.model
+grg.music.pianoly.model.midi
+grg.music.pianoly.model.music
+grg.music.pianoly.utils
