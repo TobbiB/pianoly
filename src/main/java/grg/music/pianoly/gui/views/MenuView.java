@@ -1,23 +1,19 @@
 package grg.music.pianoly.gui.views;
 
+import grg.music.pianoly.data.Page;
 import grg.music.pianoly.gui.GUI;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.scene.Cursor;
-import javafx.scene.Node;
 import javafx.scene.control.Button;
-import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.FlowPane;
-import javafx.scene.text.Text;
-
-import java.util.List;
 
 public class MenuView extends PageView {
 
     @FXML private BorderPane root;
     @FXML private FlowPane flowPane;
-    @FXML private Button connect, settings, close;
+    @FXML private Button connect, exercise, settings, close;
 
     @FXML
     private void initialize() {
@@ -39,6 +35,11 @@ public class MenuView extends PageView {
             this.flowPane.setDisable(false);
             this.root.setCursor(Cursor.DEFAULT);
         }).start();
+    }
+
+    @FXML
+    private void onExercises() {
+        GUI.getInstance().setPage(Page.EXERCISE);
     }
 
     @FXML

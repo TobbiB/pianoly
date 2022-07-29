@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Tab?>
+<?import javafx.scene.control.TabPane?>
+<?import javafx.scene.layout.AnchorPane?>
+<AnchorPane fx:id="root" fx:controller="grg.music.pianoly.gui.views.ExerciseView"
+            xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml">
+
+    <TabPane fx:id="tabPane" tabMinHeight="30">
+        <Tab text="Tab 1"/>
+        <Tab text="Tab 2"/>
+        <Tab closable="false" text="+"/>
+    </TabPane>
+
+</AnchorPane>

@@ -11,6 +11,7 @@
     <center>
         <FlowPane fx:id="flowPane" alignment="CENTER" columnHalignment="CENTER" orientation="VERTICAL" vgap="20">
             <Button fx:id="connect" prefWidth="200" prefHeight="50" text="Connect Devices" onAction="#onConnect"/>
+            <Button fx:id="exercise" prefWidth="200" prefHeight="50" text="Exercises" onAction="#onExercises"/>
             <Button fx:id="settings" prefWidth="200" prefHeight="50" text="Settings" onAction="#onSettingsClicked"/>
             <Button fx:id="close" prefWidth="200" prefHeight="50" text="Close" onAction="#onCloseClicked"/>
         </FlowPane>

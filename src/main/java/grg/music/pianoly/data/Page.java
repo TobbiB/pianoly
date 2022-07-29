@@ -4,7 +4,8 @@ import org.jetbrains.annotations.NotNull;
 
 public enum Page {
 
-    MENU("menu");
+    MENU("menu"),
+    EXERCISE("exercise");
 
     Page(@NotNull String id) {
         this.id = id;
