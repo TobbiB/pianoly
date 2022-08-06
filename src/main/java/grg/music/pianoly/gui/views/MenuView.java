@@ -17,7 +17,6 @@ public class MenuView extends PageView {
 
     @FXML
     private void initialize() {
-        instance = this;
     }
 
     @FXML

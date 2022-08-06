@@ -7,6 +7,7 @@ public abstract class PageView {
     protected static PageView instance;
 
     protected PageView() {
+        instance = this;
     }
 
 

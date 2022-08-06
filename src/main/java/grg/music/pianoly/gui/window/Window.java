@@ -1,6 +1,7 @@
 package grg.music.pianoly.gui.window;
 
 import grg.music.pianoly.data.Page;
+import grg.music.pianoly.gui.listeners.Listener;
 import grg.music.pianoly.utils.ResourceFetcher;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -19,6 +20,7 @@ public record Window(Stage stage) {
         WindowSettings.ICONS.applyDefaultValue(this.stage);
         WindowSettings.FULLSCREEN.applyDefaultValue(this.stage);
         WindowSettings.MAXIMIZED.applyDefaultValue(this.stage);
+
         this.stage.setFullScreenExitKeyCombination(KeyCombination.NO_MATCH);
         this.stage.setOnCloseRequest(windowEvent -> System.exit(0));
 
@@ -35,5 +37,7 @@ public record Window(Stage stage) {
         }
 
         WindowSettings.FULLSCREEN.applyValue(this.stage);
+
+        Listener.initialize(this.stage.getScene());
     }
 }
