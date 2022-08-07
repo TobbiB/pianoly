@@ -17,7 +17,7 @@ public class Device {
     private final Note[] notes = new Note[MAX_NOTES];
 
 
-    public Device(MidiDevice midiDevice, int id) {
+    public Device(@NotNull MidiDevice midiDevice, int id) {
         this.midi = midiDevice;
         this.id = id;
 

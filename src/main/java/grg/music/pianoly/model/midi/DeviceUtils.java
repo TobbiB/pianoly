@@ -1,5 +1,7 @@
 package grg.music.pianoly.model.midi;
 
+import org.jetbrains.annotations.NotNull;
+
 import javax.sound.midi.MidiDevice;
 import javax.sound.midi.MidiMessage;
 import javax.sound.midi.MidiUnavailableException;
@@ -9,7 +11,7 @@ public final class DeviceUtils {
 
     private static final int TIME_OUT_SEC = 5;
 
-    public static boolean verify(MidiDevice device) {
+    public static boolean verify(@NotNull MidiDevice device) {
         boolean[] b = {false};
         try {
             device.open();

@@ -1,4 +1,4 @@
-package grg.music.pianoly.data;
+package grg.music.pianoly.data.exercises;
 
 import org.jetbrains.annotations.NotNull;
 

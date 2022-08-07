@@ -9,7 +9,7 @@ public class Chord {
         DIMINISHED("Diminished", '°'),
         MINOR("Minor", 'm'),
         MAJOR("Major", Character.MIN_VALUE),
-        AUGMENTED("Augmented", '+');
+        AUGMENTED("Augmented", 'ᐩ');
 
         Mode(@NotNull String name, char symbol) {
             this.name = name;

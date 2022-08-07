@@ -1,7 +1,9 @@
 package grg.music.pianoly.controller;
 
+import grg.music.pianoly.data.exercises.Exercise;
 import grg.music.pianoly.gui.interfaces.IGUIOut;
 import grg.music.pianoly.model.Model;
+import org.jetbrains.annotations.NotNull;
 
 public class GUIOut implements IGUIOut {
 
@@ -10,5 +12,10 @@ public class GUIOut implements IGUIOut {
     @Override
     public void connectDevices() {
         model.setupMidi();
+    }
+
+    @Override
+    public void exerciseCreated(@NotNull Exercise exercise) {
+        System.out.println(exercise.id());
     }
 }

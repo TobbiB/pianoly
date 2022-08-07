@@ -1,9 +1,11 @@
 package grg.music.pianoly.gui.views;
 
-import grg.music.pianoly.data.ExerciseMode;
+import grg.music.pianoly.data.exercises.Exercise;
+import grg.music.pianoly.data.exercises.ExerciseMode;
 import grg.music.pianoly.data.music.Chord;
 import grg.music.pianoly.data.music.Interval;
 import grg.music.pianoly.data.music.Note;
+import grg.music.pianoly.gui.GUI;
 import grg.music.pianoly.utils.FXUtils;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
@@ -11,65 +13,104 @@ import javafx.scene.control.*;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
 
+import java.util.LinkedList;
+import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
 
 public class ExerciseView extends PageView {
 
     @FXML private AnchorPane root;
     @FXML private TabPane tabPane;
-    @FXML private TextField name;
     @FXML private ComboBox<ExerciseMode> mode;
-    @FXML private HBox specs;
+    @FXML private HBox specsBox;
+    @FXML private Label preview;
+    @FXML private Button save;
+
+    private final List<ComboBox<?>> specs = new LinkedList<>();
+    private String name;
 
 
     @FXML
     private void initialize() {
         this.mode.setItems(FXCollections.observableArrayList(ExerciseMode.values()));
-        this.mode.setValue(ExerciseMode.CHORD);
+        this.mode.setValue(ExerciseMode.NOTE);
         this.onModeChanged();
     }
 
     @FXML
     private void onModeChanged() {
-        this.specs.getChildren().clear();
+        this.specs.clear();
+        this.specsBox.getChildren().clear();
         switch (this.mode.getValue()) {
             case NOTE -> {
-                this.specs.getChildren().add(new Label("Note:"));
+                this.specsBox.getChildren().add(new Label("Note:"));
                 this.setUpDownSelection(1);
             }
             case INTERVAL -> {
-                this.specs.getChildren().add(new Label("Interval:"));
-                this.specs.getChildren().add(new ComboBox<>(FXCollections.observableArrayList(Interval.values())));
+                this.specsBox.getChildren().add(new Label("Interval:"));
+                ComboBox<Interval> intervals = new ComboBox<>(FXCollections.observableArrayList(Interval.values()));
+                this.specs.add(intervals);
+                this.specsBox.getChildren().add(intervals);
             }
             case CHORD -> {
-                this.specs.getChildren().add(new Label("Chord:"));
+                this.specsBox.getChildren().add(new Label("Chord:"));
                 ComboBox<Chord.Mode> chordMode = new ComboBox<>(FXCollections.observableArrayList(Chord.Mode.values()));
                 chordMode.setValue(Chord.Mode.MAJOR);
-                this.specs.getChildren().add(chordMode);
+                this.specs.add(chordMode);
+                this.specsBox.getChildren().add(chordMode);
                 this.setUpDownSelection(2);
             }
         }
+        for (ComboBox<?> box : this.specs)
+            box.setOnAction(actionEvent -> update());
+        this.update();
+    }
+
+    @FXML
+    private void onSave() {
+        this.update();
+        GUI.getInstance().getOut().exerciseCreated(new Exercise(this.name));
+        Tab tab = new Tab(this.name);
+        this.tabPane.getTabs().add(tab);
+        this.tabPane.getSelectionModel().select(tab);
     }
 
 
+    private void update() {
+        String base = "To Play: ";
+        switch (this.mode.getValue()) {
+            case NOTE, INTERVAL -> this.preview.setText(base + this.specs.get(0).getValue());
+            case CHORD -> this.preview.setText(base + this.specs.get(1).getValue() + ((Chord.Mode) this.specs.get(0).getValue()).getSymbol());
+        }
+        if (this.preview.getText().contains("null"))
+            this.preview.setText(base + "<not specified>");
+        else
+            this.name = this.mode.getValue() + ": " + this.preview.getText().replaceAll(base, "");
+
+        this.save.setDisable(this.preview.getText().equals(base + "<not specified>"));
+    }
+
     private void setUpDownSelection(int index) {
-        RadioButton[] buttons = FXUtils.setRadioButtons(this.specs, 0, "Up", "Down");
-        ComboBox<String> boxUp = new ComboBox<>(FXCollections.observableArrayList((Note.NAMES_UP)));
-        ComboBox<String> boxDown = new ComboBox<>(FXCollections.observableArrayList((Note.NAMES_DOWN)));
-        this.specs.getChildren().add(index, (buttons[0].isSelected()) ? boxUp : boxDown);
+        RadioButton[] buttons = FXUtils.setRadioButtons(this.specsBox, 0, "Up", "Down");
+        ComboBox<String> notes = new ComboBox<>();
+        this.specs.add(notes);
+        this.specsBox.getChildren().add(index, notes);
+
+        notes.setItems(FXCollections.observableArrayList((buttons[0].isSelected()) ? Note.NAMES_UP : Note.NAMES_DOWN));
 
         AtomicInteger selected = new AtomicInteger(-1);
-        for (RadioButton button : buttons)
+        for (RadioButton button : buttons) {
             button.setOnAction(actionEvent -> {
-                ComboBox<String> box = (this.specs.getChildren().get(index).equals(boxUp)) ? boxUp : boxDown;
-                for (int i = 0; i < box.getItems().size(); i++)
-                    if (box.getValue() != null && box.getValue().equals(box.getItems().get(i)))
+                for (int i = 0; i < notes.getItems().size(); i++) {
+                    if (notes.getValue() != null && notes.getValue().equals(notes.getItems().get(i)))
                         selected.set(i);
-                this.specs.getChildren().set(index, (buttons[0].isSelected()) ? boxUp : boxDown);
-                box = (buttons[0].isSelected()) ? boxUp : boxDown;
+                }
+                notes.setItems(FXCollections.observableArrayList((buttons[0].isSelected()) ? Note.NAMES_UP : Note.NAMES_DOWN));
                 if (selected.get() >= 0)
-                    box.setValue((buttons[0].isSelected()) ? Note.NAMES_UP[selected.get()] : Note.NAMES_DOWN[selected.get()]);
+                    notes.setValue((buttons[0].isSelected()) ? Note.NAMES_UP[selected.get()] : Note.NAMES_DOWN[selected.get()]);
+                this.update();
             });
+        }
     }
 
 }

@@ -11,7 +11,7 @@ import org.jetbrains.annotations.NotNull;
 
 import java.io.IOException;
 
-public record Window(Stage stage) {
+public record Window(@NotNull Stage stage) {
 
     public Window(@NotNull Stage stage) {
         this.stage = stage;

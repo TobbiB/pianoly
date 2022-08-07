@@ -29,7 +29,7 @@ public final class GUI {
             this.window = new Window(stage);
     }
 
-    public <T> void modifyWindow(@NotNull WindowSettings<T> settings, T value) {
+    public <T> void modifyWindow(@NotNull WindowSettings<T> settings, @NotNull T value) {
         if (this.window != null)
             settings.applyValue(this.window.stage(), value);
     }

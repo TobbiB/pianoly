@@ -2,6 +2,7 @@ module:grg.music.pianoly
 grg.music.pianoly
 grg.music.pianoly.controller
 grg.music.pianoly.data
+grg.music.pianoly.data.exercises
 grg.music.pianoly.data.music
 grg.music.pianoly.gui
 grg.music.pianoly.gui.interfaces
