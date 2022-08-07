@@ -1,6 +1,6 @@
 package grg.music.pianoly.model.midi;
 
-import grg.music.pianoly.model.music.Note;
+import grg.music.pianoly.data.music.Note;
 import org.jetbrains.annotations.NotNull;
 
 import javax.sound.midi.*;

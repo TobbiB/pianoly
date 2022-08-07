@@ -1,10 +1,12 @@
-package grg.music.pianoly.model.music;
+package grg.music.pianoly.data.music;
 
 import org.jetbrains.annotations.Nullable;
 
 public class Note {
 
-    private static final char[] NAMES = {'C', '?', 'D', '?', 'E', 'F', '?', 'G', '?', 'A', '?', 'B'};
+    public static final char[] NAMES = {'C', '?', 'D', '?', 'E', 'F', '?', 'G', '?', 'A', '?', 'B'};
+    public static final String[] NAMES_UP = {"C", "C♯", "D", "D♯", "E", "F", "F♯", "G", "G♯", "A", "A♯", "B"};
+    public static final String[] NAMES_DOWN = {"C", "D♭", "D", "E♭", "E", "F", "G♭", "G", "A♭", "A", "B♭", "B"};
 
     private final int key;
 
