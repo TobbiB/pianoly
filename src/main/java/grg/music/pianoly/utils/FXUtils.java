@@ -13,8 +13,7 @@ public final class FXUtils {
         for (int i = 0; i < strings.length; i++) {
             buttons[i] = new RadioButton(strings[i]);
             buttons[i].setToggleGroup(group);
-            if (i == selected)
-                buttons[i].setSelected(true);
+            buttons[i].setSelected(i == selected);
             pane.getChildren().add(buttons[i]);
         }
         return buttons;

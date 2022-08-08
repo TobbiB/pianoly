@@ -14,6 +14,6 @@ public final class ResourceFetcher {
 
     @Nullable
     public static URL getImg(@Nullable String name) {
-        return Pianoly.class.getResource("img/" + name + ".fxml");
+        return Pianoly.class.getResource("img/" + name + ".png");
     }
 }
