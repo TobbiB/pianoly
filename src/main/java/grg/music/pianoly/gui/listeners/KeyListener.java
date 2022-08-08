@@ -2,8 +2,6 @@ package grg.music.pianoly.gui.listeners;
 
 import grg.music.pianoly.data.Page;
 import grg.music.pianoly.gui.GUI;
-import grg.music.pianoly.gui.views.MenuView;
-import grg.music.pianoly.gui.views.PageView;
 import javafx.scene.Scene;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
@@ -16,7 +14,7 @@ public class KeyListener extends Listener<KeyEvent> {
 
     @Override
     public void handle(KeyEvent keyEvent) {
-        if (keyEvent.getCode() == KeyCode.ESCAPE && !(PageView.getInstance() instanceof MenuView))
+        if (keyEvent.getCode() == KeyCode.ESCAPE)
             GUI.getInstance().setPage(Page.MENU);
     }
 }

@@ -33,8 +33,7 @@ public final class DeviceUtils {
         synchronized (Thread.currentThread()) {
             try {
                 Thread.currentThread().wait(TIME_OUT_SEC * 1000);
-            } catch (InterruptedException e) {
-                throw new RuntimeException(e);
+            } catch (InterruptedException ignored) {
             }
         }
         try {

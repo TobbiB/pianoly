@@ -13,11 +13,15 @@ import javafx.scene.control.*;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
 
+import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
 
 public class ExerciseView extends PageView {
+
+    private static List<Tab> tabs = Collections.emptyList();
+
 
     @FXML private AnchorPane root;
     @FXML private TabPane tabPane;
@@ -30,8 +34,16 @@ public class ExerciseView extends PageView {
     private String name;
 
 
+    @Override
+    public void onClose() {
+        this.tabPane.getSelectionModel().selectFirst();
+        tabs = this.tabPane.getTabs().stream().skip(1).toList();
+    }
+
+
     @FXML
     private void initialize() {
+        this.tabPane.getTabs().addAll(tabs);
         this.mode.setItems(FXCollections.observableArrayList(ExerciseMode.values()));
         this.mode.setValue(ExerciseMode.NOTE);
         this.onModeChanged();

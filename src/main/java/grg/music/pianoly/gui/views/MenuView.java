@@ -15,19 +15,30 @@ public class MenuView extends PageView {
     @FXML private FlowPane flowPane;
     @FXML private Button connect, exercise, settings, close;
 
+
+    private Thread connectThread;
+
+
+    @Override
+    public void onClose() {
+        if (this.connectThread != null)
+            this.connectThread.interrupt();
+    }
+
+
     @FXML
     private void initialize() {
     }
 
     @FXML
     private void onConnect() {
-        Thread thread = new Thread(() -> GUI.getInstance().getOut().connectDevices());
-        thread.start();
+        this.connectThread = new Thread(() -> GUI.getInstance().getOut().connectDevices());
+        this.connectThread.start();
         this.root.setCursor(Cursor.WAIT);
         this.flowPane.setDisable(true);
         new Thread(() -> {
             try {
-                thread.join();
+                this.connectThread.join();
             } catch (InterruptedException e) {
                 throw new RuntimeException(e);
             }
@@ -51,4 +62,5 @@ public class MenuView extends PageView {
         Platform.exit();
         System.exit(0);
     }
+
 }
