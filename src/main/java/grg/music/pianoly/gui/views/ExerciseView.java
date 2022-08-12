@@ -8,6 +8,8 @@ import grg.music.pianoly.data.music.Note;
 import grg.music.pianoly.gui.GUI;
 import grg.music.pianoly.utils.FXUtils;
 import javafx.collections.FXCollections;
+import javafx.event.Event;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.layout.AnchorPane;
@@ -81,8 +83,10 @@ public class ExerciseView extends PageView {
     @FXML
     private void onSave() {
         this.update();
-        GUI.getInstance().getOut().exerciseCreated(new Exercise(this.name));
+        GUI.getInstance().getOut().exerciseCreated(this.mode.getValue(), this.name);
         Tab tab = new Tab(this.name);
+        tab.setId(String.valueOf(this.tabPane.getTabs().size() - 1));
+        tab.setOnClosed(event -> GUI.getInstance().getOut().exerciseClosed(Integer.parseInt(tab.getId())));
         this.tabPane.getTabs().add(tab);
         this.tabPane.getSelectionModel().select(tab);
     }

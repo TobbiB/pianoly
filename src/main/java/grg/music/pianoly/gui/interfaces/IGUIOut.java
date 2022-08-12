@@ -1,11 +1,12 @@
 package grg.music.pianoly.gui.interfaces;
 
-import grg.music.pianoly.data.exercises.Exercise;
-import org.jetbrains.annotations.NotNull;
+import grg.music.pianoly.data.exercises.ExerciseMode;
 
 public interface IGUIOut {
 
     void connectDevices();
+    
+    void exerciseCreated(ExerciseMode value, String name);
 
-    void exerciseCreated(@NotNull Exercise exercise);
+    void exerciseClosed(int id);
 }

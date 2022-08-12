@@ -13,8 +13,6 @@ public enum Page {
 
     private final String id;
 
-
-    @NotNull
     public String getId() {
         return this.id;
     }

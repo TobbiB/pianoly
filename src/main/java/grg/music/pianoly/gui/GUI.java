@@ -40,12 +40,10 @@ public final class GUI {
     }
 
 
-    @NotNull
     public IGUIOut getOut() {
         return this.out;
     }
 
-    @NotNull
     public IGUIIn getIn() {
         return this.in;
     }

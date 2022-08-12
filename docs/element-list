@@ -10,5 +10,6 @@ grg.music.pianoly.gui.listeners
 grg.music.pianoly.gui.views
 grg.music.pianoly.gui.window
 grg.music.pianoly.model
-grg.music.pianoly.model.midi
+grg.music.pianoly.model.students
+grg.music.pianoly.model.students.interfaces
 grg.music.pianoly.utils
