@@ -37,18 +37,18 @@ public class ExerciseView extends PageView {
 
 
     @Override
-    public void onClose() {
-        this.tabPane.getSelectionModel().selectFirst();
-        tabs = this.tabPane.getTabs().stream().skip(1).toList();
-    }
-
-
     @FXML
-    private void initialize() {
+    protected void initialize() {
         this.tabPane.getTabs().addAll(tabs);
         this.mode.setItems(FXCollections.observableArrayList(ExerciseMode.values()));
         this.mode.setValue(ExerciseMode.NOTE);
         this.onModeChanged();
+    }
+
+    @Override
+    public void onClose() {
+        this.tabPane.getSelectionModel().selectFirst();
+        tabs = this.tabPane.getTabs().stream().skip(1).toList();
     }
 
     @FXML

@@ -20,14 +20,14 @@ public class MenuView extends PageView {
 
 
     @Override
+    @FXML
+    protected void initialize() {
+    }
+
+    @Override
     public void onClose() {
         if (this.connectThread != null)
             this.connectThread.interrupt();
-    }
-
-
-    @FXML
-    private void initialize() {
     }
 
     @FXML
@@ -40,7 +40,7 @@ public class MenuView extends PageView {
             try {
                 this.connectThread.join();
             } catch (InterruptedException e) {
-                throw new RuntimeException(e);
+                e.printStackTrace();
             }
             this.flowPane.setDisable(false);
             this.root.setCursor(Cursor.DEFAULT);

@@ -12,6 +12,8 @@ public abstract class PageView {
         instance = this;
     }
 
+    protected abstract void initialize();
+
     protected abstract void onClose();
 
 

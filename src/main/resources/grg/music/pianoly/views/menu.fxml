@@ -1,19 +1,23 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.Button?>
-<?import javafx.scene.layout.FlowPane?>
-
-<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
 
 <BorderPane fx:id="root" fx:controller="grg.music.pianoly.gui.views.MenuView"
-            xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml">
+            xmlns="http://javafx.com/javafx/11.0.14-internal" xmlns:fx="http://javafx.com/fxml/1">
 
     <center>
         <FlowPane fx:id="flowPane" alignment="CENTER" columnHalignment="CENTER" orientation="VERTICAL" vgap="20">
-            <Button fx:id="connect" prefWidth="200" prefHeight="50" text="Connect Devices" onAction="#onConnect"/>
-            <Button fx:id="exercise" prefWidth="200" prefHeight="50" text="Exercises" onAction="#onExercises"/>
-            <Button fx:id="settings" prefWidth="200" prefHeight="50" text="Settings" onAction="#onSettingsClicked"/>
-            <Button fx:id="close" prefWidth="200" prefHeight="50" text="Close" onAction="#onCloseClicked"/>
+            <Label text="Pianoly">
+                <font>
+                    <Font size="36.0"/>
+                </font>
+            </Label>
+            <Button fx:id="connect" onAction="#onConnect" prefHeight="50" prefWidth="200" text="Connect Devices"/>
+            <Button fx:id="exercise" onAction="#onExercises" prefHeight="50" prefWidth="200" text="Exercises"/>
+            <Button fx:id="settings" onAction="#onSettingsClicked" prefHeight="50" prefWidth="200" text="Settings"/>
+            <Button fx:id="close" onAction="#onCloseClicked" prefHeight="50" prefWidth="200" text="Close"/>
         </FlowPane>
     </center>
 </BorderPane>
