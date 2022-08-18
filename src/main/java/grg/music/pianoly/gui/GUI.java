@@ -39,6 +39,10 @@ public final class GUI {
             this.window.setPage(page);
     }
 
+    public void setMainPage() {
+        this.setPage(Page.MENU);
+    }
+
 
     public IGUIOut getOut() {
         return this.out;

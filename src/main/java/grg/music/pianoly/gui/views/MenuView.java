@@ -4,7 +4,6 @@ import grg.music.pianoly.data.Page;
 import grg.music.pianoly.gui.GUI;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
-import javafx.scene.Cursor;
 import javafx.scene.control.Button;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.FlowPane;
@@ -16,35 +15,20 @@ public class MenuView extends PageView {
     @FXML private Button connect, exercise, settings, close;
 
 
-    private Thread connectThread;
-
-
     @Override
     @FXML
     protected void initialize() {
+        this.exercise.setDisable(!GUI.getInstance().getOut().isStudentsSetup());
+
     }
 
     @Override
     public void onClose() {
-        if (this.connectThread != null)
-            this.connectThread.interrupt();
     }
 
     @FXML
     private void onConnect() {
-        this.connectThread = new Thread(() -> GUI.getInstance().getOut().connectDevices());
-        this.connectThread.start();
-        this.root.setCursor(Cursor.WAIT);
-        this.flowPane.setDisable(true);
-        new Thread(() -> {
-            try {
-                this.connectThread.join();
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-            this.flowPane.setDisable(false);
-            this.root.setCursor(Cursor.DEFAULT);
-        }).start();
+        GUI.getInstance().setPage(Page.CONNECT);
     }
 
     @FXML
@@ -53,7 +37,7 @@ public class MenuView extends PageView {
     }
 
     @FXML
-    private void onSettingsClicked() {
+    private void onSettings() {
         // TODO
     }
 

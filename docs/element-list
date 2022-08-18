@@ -12,4 +12,5 @@ grg.music.pianoly.gui.window
 grg.music.pianoly.model
 grg.music.pianoly.model.students
 grg.music.pianoly.model.students.interfaces
+grg.music.pianoly.test
 grg.music.pianoly.utils

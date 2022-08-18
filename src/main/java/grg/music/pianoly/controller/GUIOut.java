@@ -10,8 +10,13 @@ public class GUIOut implements IGUIOut {
     private final Model model = Model.getInstance();
 
     @Override
+    public boolean isStudentsSetup() {
+        return this.model.getStudentsManager().getStudents() != null && !this.model.getStudentsManager().getStudents().isEmpty();
+    }
+
+    @Override
     public void connectDevices() {
-        model.getStudentsManager().setupStudents();
+        this.model.getStudentsManager().setupStudents();
     }
 
     @Override
@@ -21,6 +26,6 @@ public class GUIOut implements IGUIOut {
 
     @Override
     public void exerciseClosed(int id) {
-        Model.getInstance().getExercises().remove(id);
+        this.model.getExercises().remove(id);
     }
 }

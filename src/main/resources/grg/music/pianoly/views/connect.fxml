@@ -1,9 +1,27 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.layout.AnchorPane?>
-<AnchorPane xmlns="http://javafx.com/javafx"
-            xmlns:fx="http://javafx.com/fxml"
-            fx:controller="grg.music.pianoly.gui.views.ConnectView"
-            prefHeight="400.0" prefWidth="600.0">
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<AnchorPane fx:id="root" fx:controller="grg.music.pianoly.gui.views.ConnectView"
+            xmlns="http://javafx.com/javafx/11.0.14-internal" xmlns:fx="http://javafx.com/fxml/1">
+
+    <Label fx:id="label" alignment="CENTER" AnchorPane.leftAnchor="0" AnchorPane.rightAnchor="0" AnchorPane.topAnchor="50.0">
+        <font>
+            <Font size="24.0"/>
+        </font>
+    </Label>
+    <Label fx:id="countdown" alignment="CENTER" AnchorPane.rightAnchor="50" AnchorPane.topAnchor="50">
+        <font>
+            <Font size="20.0"/>
+        </font>
+    </Label>
+    <GridPane fx:id="grid" alignment="CENTER" hgap="20" vgap="20"
+              AnchorPane.bottomAnchor="100" AnchorPane.leftAnchor="0" AnchorPane.rightAnchor="0" AnchorPane.topAnchor="100"/>
+    <Button fx:id="back" prefHeight="50" prefWidth="200" text="Back to menu" onAction="#onBack" disable="true"
+            AnchorPane.bottomAnchor="50.0" AnchorPane.leftAnchor="50.0"/>
+    <Button fx:id="retry" prefHeight="50" prefWidth="200" text="Retry" onAction="#onRetry"
+            AnchorPane.bottomAnchor="50.0" AnchorPane.rightAnchor="50.0"/>
 
 </AnchorPane>

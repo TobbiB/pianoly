@@ -5,6 +5,7 @@ import org.jetbrains.annotations.NotNull;
 public enum Page {
 
     MENU("menu"),
+    CONNECT("connect"),
     EXERCISE("exercise");
 
     Page(@NotNull String id) {

@@ -15,6 +15,6 @@ public class KeyListener extends Listener<KeyEvent> {
     @Override
     public void handle(KeyEvent keyEvent) {
         if (keyEvent.getCode() == KeyCode.ESCAPE)
-            GUI.getInstance().setPage(Page.MENU);
+            GUI.getInstance().setMainPage();
     }
 }

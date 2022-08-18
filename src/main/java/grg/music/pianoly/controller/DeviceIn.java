@@ -52,9 +52,9 @@ public class DeviceIn implements IDeviceIn {
         return b[0];
     }
 
-
-    public MidiDevice getMidiDevice() {
-        return this.midiDevice;
+    @Override
+    public String getName() {
+        return this.midiDevice.getDeviceInfo().getName();
     }
 
 

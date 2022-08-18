@@ -15,6 +15,6 @@ public class MouseListener extends Listener<MouseEvent> {
     @Override
     public void handle(MouseEvent mouseEvent) {
         if (mouseEvent.getButton().equals(MouseButton.BACK))
-            GUI.getInstance().setPage(Page.MENU);
+            GUI.getInstance().setMainPage();
     }
 }

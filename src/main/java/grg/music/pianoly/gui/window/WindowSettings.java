@@ -5,10 +5,14 @@ import javafx.stage.Stage;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
+import java.util.LinkedList;
 import java.util.List;
 import java.util.function.BiConsumer;
 
 public final class WindowSettings<T> {
+
+    private static final List<WindowSettings<?>> windowSettings = new LinkedList<>();
+
 
     public static final WindowSettings<String> TITLE = new WindowSettings<>("Pianoly", Stage::setTitle);
 
@@ -24,6 +28,7 @@ public final class WindowSettings<T> {
     private T value;
 
     private WindowSettings(@NotNull T defaultValue, @NotNull BiConsumer<Stage, T> consumer) {
+        windowSettings.add(this);
         this.consumer = consumer;
         this.defaultValue = defaultValue;
         this.value = defaultValue;
@@ -45,5 +50,10 @@ public final class WindowSettings<T> {
         } else {
             this.applyValue(stage);
         }
+    }
+
+
+    public static List<WindowSettings<?>> getAllSettings() {
+        return windowSettings;
     }
 }

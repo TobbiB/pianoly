@@ -1,6 +1,5 @@
 package grg.music.pianoly.gui.views;
 
-import grg.music.pianoly.data.exercises.Exercise;
 import grg.music.pianoly.data.exercises.ExerciseMode;
 import grg.music.pianoly.data.music.Chord;
 import grg.music.pianoly.data.music.Interval;
@@ -8,8 +7,6 @@ import grg.music.pianoly.data.music.Note;
 import grg.music.pianoly.gui.GUI;
 import grg.music.pianoly.utils.FXUtils;
 import javafx.collections.FXCollections;
-import javafx.event.Event;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.layout.AnchorPane;
