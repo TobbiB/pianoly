@@ -5,6 +5,8 @@ import org.jetbrains.annotations.NotNull;
 public enum Page {
 
     MENU("menu"),
+    // TODO
+    STUDENTS("students"),
     CONNECT("connect"),
     EXERCISE("exercise");
 

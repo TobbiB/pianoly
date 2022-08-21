@@ -2,6 +2,7 @@ package grg.music.pianoly.gui.views;
 
 import grg.music.pianoly.data.Page;
 import grg.music.pianoly.gui.GUI;
+import grg.music.pianoly.gui.data.StudentInfo;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.geometry.Pos;
@@ -12,8 +13,10 @@ import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import org.jetbrains.annotations.NotNull;
 
+import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 import java.util.concurrent.*;
 import java.util.concurrent.atomic.AtomicReference;
 import java.util.function.Consumer;
@@ -27,6 +30,7 @@ public class ConnectView extends PageView {
     @FXML private GridPane grid;
     @FXML private Button back, retry;
 
+    private final List<StudentInfo> studentInfos = new LinkedList<>();
     private final Button[][] buttons = new Button[lines][columns];
     private final BlockingQueue<int[]> cellBlockingQueue = new ArrayBlockingQueue<>(1);
     private final List<Thread> threads = new LinkedList<>();
@@ -130,6 +134,8 @@ public class ConnectView extends PageView {
             });
         } catch (InterruptedException ignored) {
         }
+
+        this.studentInfos.add(new StudentInfo(input.get(), cell.get()[0], cell.get()[1]));
         return input.get();
     }
 
@@ -139,6 +145,7 @@ public class ConnectView extends PageView {
             this.label.setText("Setup Finished ☺");
             this.back.setDisable(false);
         });
+        StudentsView.setGridData(this.studentInfos, this.grid.getColumnCount(), this.grid.getRowCount());
     }
 
 

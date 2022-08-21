@@ -3,6 +3,7 @@ package grg.music.pianoly.gui.views;
 import grg.music.pianoly.data.Page;
 import grg.music.pianoly.gui.GUI;
 import javafx.application.Platform;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.layout.BorderPane;
@@ -47,4 +48,7 @@ public class MenuView extends PageView {
         System.exit(0);
     }
 
+    public void onTest() {
+        GUI.getInstance().setPage(Page.STUDENTS);
+    }
 }

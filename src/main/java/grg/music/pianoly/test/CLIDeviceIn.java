@@ -19,6 +19,7 @@ public class CLIDeviceIn implements IDeviceIn {
 
     public void addInput(String s) {
         this.blockingQueue.add(s);
+
     }
 
     @Override
