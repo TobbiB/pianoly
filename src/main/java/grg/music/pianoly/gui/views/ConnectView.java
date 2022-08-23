@@ -3,6 +3,7 @@ package grg.music.pianoly.gui.views;
 import grg.music.pianoly.data.Page;
 import grg.music.pianoly.gui.GUI;
 import grg.music.pianoly.gui.data.StudentInfo;
+import grg.music.pianoly.model.settings.Settings;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.geometry.Pos;
@@ -79,7 +80,7 @@ public class ConnectView extends PageView {
         this.countdownActive = true;
         ScheduledExecutorService executor = Executors.newSingleThreadScheduledExecutor();
         executor.scheduleAtFixedRate(new Runnable() {
-            int i = 10;
+            int i = Settings.CONNECT_COOLDOWN.getValue();
 
             @Override
             public void run() {

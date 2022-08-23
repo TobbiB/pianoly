@@ -18,7 +18,6 @@
             <Button fx:id="exercise" onAction="#onExercises" prefHeight="50" prefWidth="200" text="Exercises"/>
             <Button fx:id="settings" onAction="#onSettings" prefHeight="50" prefWidth="200" text="Settings"/>
             <Button fx:id="close" onAction="#onCloseClicked" prefHeight="50" prefWidth="200" text="Close"/>
-            <Button text="TEST: students" onAction="#onTest"/>
         </FlowPane>
     </center>
 </BorderPane>

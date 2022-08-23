@@ -1,5 +1,6 @@
 package grg.music.pianoly.controller;
 
+import grg.music.pianoly.model.settings.Settings;
 import grg.music.pianoly.model.students.interfaces.IDeviceIn;
 
 import javax.sound.midi.*;
@@ -7,9 +8,6 @@ import java.util.LinkedList;
 import java.util.List;
 
 public class DeviceIn implements IDeviceIn {
-
-    private static final int TIME_OUT_SEC = 5;
-
 
     private final MidiDevice midiDevice;
 
@@ -39,7 +37,7 @@ public class DeviceIn implements IDeviceIn {
         }
         synchronized (Thread.currentThread()) {
             try {
-                Thread.currentThread().wait(TIME_OUT_SEC * 1000);
+                Thread.currentThread().wait(Settings.CONNECT_COOLDOWN.getValue() * 1000);
             } catch (InterruptedException ignored) {
             }
         }

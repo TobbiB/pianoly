@@ -1,5 +1,6 @@
 package grg.music.pianoly.test;
 
+import grg.music.pianoly.model.settings.Settings;
 import grg.music.pianoly.model.students.interfaces.IDeviceIn;
 
 import java.util.concurrent.BlockingQueue;
@@ -26,7 +27,7 @@ public class CLIDeviceIn implements IDeviceIn {
     public boolean waitForInput() {
         String input = null;
         try {
-            input = blockingQueue.poll(10, TimeUnit.SECONDS);
+            input = blockingQueue.poll(Settings.CONNECT_COOLDOWN.getValue(), TimeUnit.SECONDS);
         } catch (InterruptedException ignored) {
         }
         return input != null;

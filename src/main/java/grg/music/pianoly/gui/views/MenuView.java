@@ -47,8 +47,4 @@ public class MenuView extends PageView {
         Platform.exit();
         System.exit(0);
     }
-
-    public void onTest() {
-        GUI.getInstance().setPage(Page.STUDENTS);
-    }
 }
