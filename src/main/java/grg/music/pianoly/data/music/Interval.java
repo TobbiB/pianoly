@@ -4,7 +4,7 @@ import org.jetbrains.annotations.NotNull;
 
 public enum Interval {
 
-    UNISONE("Unisone"),
+    UNISONE(" Unisone"),
     MIN_SECOND("Minor Second"),
     MAJ_SECOND("Major Second"),
     MIN_THIRD("Minor Third"),

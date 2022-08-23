@@ -17,12 +17,6 @@ public record Window(@NotNull Stage stage) {
         this.stage = stage;
         for (WindowSettings<?> settings : WindowSettings.getAllSettings())
             settings.applyDefaultValue(this.stage);
-/*
-        WindowSettings.TITLE.applyDefaultValue(this.stage);
-        WindowSettings.ICONS.applyDefaultValue(this.stage);
-        WindowSettings.FULLSCREEN.applyDefaultValue(this.stage);
-        WindowSettings.MAXIMIZED.applyDefaultValue(this.stage);
-*/
         this.stage.setFullScreenExitKeyCombination(KeyCombination.NO_MATCH);
         this.stage.setOnCloseRequest(windowEvent -> System.exit(0));
 

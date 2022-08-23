@@ -14,7 +14,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class StudentsView extends PageView {
+public class StudentsView {
 
     private static final int WIDTH = 150, HEIGHT = 75;
 
@@ -27,11 +27,10 @@ public class StudentsView extends PageView {
     @FXML
     private GridPane root;
 
-    @Override
     @FXML
-    protected void initialize() {
+    private void initialize() {
         INSTANCE = this;
-        if (STUDENTS == null) {
+        if (STUDENTS.isEmpty()) {
             return;
         }
 
@@ -42,6 +41,7 @@ public class StudentsView extends PageView {
                 label.setAlignment(Pos.CENTER);
                 label.setBorder(new Border(new BorderStroke(
                         Color.BLACK, BorderStrokeStyle.SOLID, CornerRadii.EMPTY, BorderWidths.DEFAULT)));
+                label.setDisable(true);
                 this.root.add(label, c, r);
             }
         }
@@ -52,11 +52,6 @@ public class StudentsView extends PageView {
             this.root.add(entry.getValue(), entry.getKey().getColumnIndex(), entry.getKey().getRowIndex());
         }
         this.update();
-    }
-
-    @Override
-    protected void onClose() {
-        INSTANCE = null;
     }
 
 

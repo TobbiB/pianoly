@@ -2,6 +2,7 @@ package grg.music.pianoly.controller;
 
 import grg.music.pianoly.model.settings.Settings;
 import grg.music.pianoly.model.students.interfaces.IDeviceIn;
+import org.jetbrains.annotations.NotNull;
 
 import javax.sound.midi.*;
 import java.util.LinkedList;
@@ -11,7 +12,7 @@ public class DeviceIn implements IDeviceIn {
 
     private final MidiDevice midiDevice;
 
-    public DeviceIn(MidiDevice midiDevice) {
+    public DeviceIn(@NotNull MidiDevice midiDevice) {
         this.midiDevice = midiDevice;
     }
 

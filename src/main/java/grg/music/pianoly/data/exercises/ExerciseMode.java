@@ -4,7 +4,7 @@ import org.jetbrains.annotations.NotNull;
 
 public enum ExerciseMode {
 
-    FREE("Free"),
+    //FREE("Free"),
     NOTE("Note"),
     INTERVAL("Interval"),
     CHORD("Chord");

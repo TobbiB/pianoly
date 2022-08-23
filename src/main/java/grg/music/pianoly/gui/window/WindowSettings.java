@@ -2,6 +2,7 @@ package grg.music.pianoly.gui.window;
 
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
+import javafx.util.Pair;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -9,18 +10,28 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.function.BiConsumer;
 
+@SuppressWarnings("unused")
 public final class WindowSettings<T> {
 
-    private static final List<WindowSettings<?>> windowSettings = new LinkedList<>();
+    private static final List<WindowSettings<?>> WINDOW_SETTINGS = new LinkedList<>();
 
 
     public static final WindowSettings<String> TITLE = new WindowSettings<>("Pianoly", Stage::setTitle);
 
-    public static final WindowSettings<List<Image>> ICONS = new WindowSettings<>(List.of(), (stage, images) -> stage.getIcons().addAll(images));
+    public static final WindowSettings<List<Image>> ICONS = new WindowSettings<>(List.of(),
+            (stage, images) -> stage.getIcons().addAll(images));
 
     public static final WindowSettings<Boolean> FULLSCREEN = new WindowSettings<>(false, Stage::setFullScreen);
 
     public static final WindowSettings<Boolean> MAXIMIZED = new WindowSettings<>(true, Stage::setMaximized);
+
+    public static final WindowSettings<Pair<Integer, Integer>> SIZE = new WindowSettings<>(new Pair<>(1024, 576),
+            (stage, size) -> {
+        stage.setWidth(size.getKey());
+        stage.setHeight(size.getValue());
+    });
+
+    public static final WindowSettings<Boolean> RESIZABLE = new WindowSettings<>(false, Stage::setResizable);
 
 
     private final BiConsumer<Stage, T> consumer;
@@ -28,7 +39,7 @@ public final class WindowSettings<T> {
     private T value;
 
     private WindowSettings(@NotNull T defaultValue, @NotNull BiConsumer<Stage, T> consumer) {
-        windowSettings.add(this);
+        WINDOW_SETTINGS.add(this);
         this.consumer = consumer;
         this.defaultValue = defaultValue;
         this.value = defaultValue;
@@ -54,6 +65,6 @@ public final class WindowSettings<T> {
 
 
     public static List<WindowSettings<?>> getAllSettings() {
-        return windowSettings;
+        return WINDOW_SETTINGS;
     }
 }

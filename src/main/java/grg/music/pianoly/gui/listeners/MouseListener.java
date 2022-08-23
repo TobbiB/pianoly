@@ -1,6 +1,5 @@
 package grg.music.pianoly.gui.listeners;
 
-import grg.music.pianoly.data.Page;
 import grg.music.pianoly.gui.GUI;
 import javafx.scene.Scene;
 import javafx.scene.input.MouseButton;

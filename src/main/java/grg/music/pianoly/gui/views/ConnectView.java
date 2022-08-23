@@ -14,45 +14,78 @@ import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import org.jetbrains.annotations.NotNull;
 
-import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Map;
 import java.util.concurrent.*;
 import java.util.concurrent.atomic.AtomicReference;
 import java.util.function.Consumer;
 
 public class ConnectView extends PageView {
 
-    private static final int columns = 4, lines = 4, width = 200, height = 100;
+    private static final int WIDTH = 200, HEIGHT = 75;
+    private static final int MAX_COLUMNS = 7, MAX_ROWS = 5;
+    private static int COLUMNS = 4, ROWS = 4;
 
     @FXML private AnchorPane root;
     @FXML private Label label, countdown;
+    @FXML private HBox box;
     @FXML private GridPane grid;
-    @FXML private Button back, retry;
+    @FXML private Button back, start;
 
     private final List<StudentInfo> studentInfos = new LinkedList<>();
-    private final Button[][] buttons = new Button[lines][columns];
+    private final Button[][] buttons = new Button[MAX_COLUMNS][MAX_ROWS];
+
     private final BlockingQueue<int[]> cellBlockingQueue = new ArrayBlockingQueue<>(1);
     private final List<Thread> threads = new LinkedList<>();
 
+    private boolean started = false;
     private String outName;
     private boolean countdownActive = false;
 
     @Override
     @FXML
     protected void initialize() {
-        Thread thread = new Thread(() -> GUI.getInstance().getOut().connectDevices());
-        thread.start();
-        this.threads.add(thread);
-        for (int i = 0; i < lines; i++) {
-            for (int k = 0; k < columns; k++) {
-                int[] cell = new int[]{i, k};
-                buttons[i][k] = new Button("connect");
-                buttons[i][k].setPrefSize(width, height);
-                buttons[i][k].setDisable(true);
-                buttons[i][k].setOnAction(actionEvent -> cellBlockingQueue.add(cell));
-                this.grid.add(buttons[i][k], i, k);
+
+        {
+            Button[] boxButtons = {new Button("+ Row"), new Button("- Row"),
+                    new Button("+ Column"), new Button("- Column")};
+
+            boxButtons[0].setOnAction(actionEvent -> {
+                if (ROWS < MAX_ROWS) {
+                    for (int i = 0; i < COLUMNS; i++)
+                        this.setButton(i, ROWS);
+                    ROWS++;
+                }
+            });
+            boxButtons[1].setOnAction(actionEvent -> {
+                if (ROWS > 1) {
+                    ROWS--;
+                    this.grid.getChildren().removeIf(node -> GridPane.getRowIndex(node) == ROWS);
+                }
+            });
+            boxButtons[2].setOnAction(actionEvent -> {
+                if (COLUMNS < MAX_COLUMNS) {
+                    for (int i = 0; i < ROWS; i++)
+                        this.setButton(COLUMNS, i);
+                    COLUMNS++;
+                }
+            });
+            boxButtons[3].setOnAction(actionEvent -> {
+                if (COLUMNS > 1) {
+                    COLUMNS--;
+                    grid.getChildren().removeIf(node -> GridPane.getColumnIndex(node) == COLUMNS);
+                }
+            });
+
+            for (Button button : boxButtons) {
+                button.setPrefSize(100, 50);
+                this.box.getChildren().add(button);
+            }
+        }
+
+        for (int column = 0; column < COLUMNS; column++) {
+            for (int row = 0; row < ROWS; row++) {
+                this.setButton(column, row);
             }
         }
     }
@@ -69,8 +102,17 @@ public class ConnectView extends PageView {
     }
 
     @FXML
-    private void onRetry() {
-        GUI.getInstance().setPage(Page.CONNECT);
+    private void onStart() {
+        if (!this.started) {
+            Thread thread = new Thread(() -> GUI.getInstance().getOut().connectDevices());
+            thread.start();
+            this.threads.add(thread);
+
+            this.started = true;
+            this.start.setText("Retry");
+            this.root.getChildren().remove(this.box);
+        } else
+            GUI.getInstance().setPage(Page.CONNECT);
     }
 
 
@@ -111,7 +153,7 @@ public class ConnectView extends PageView {
             this.modifyButtons(button -> button.setDisable(true));
             Platform.runLater(() -> {
                 TextField text = new TextField();
-                text.setPrefSize(width, height);
+                text.setPrefSize(WIDTH, HEIGHT);
                 text.setAlignment(Pos.CENTER);
                 text.setOnAction(actionEvent -> {
                     if (text.getText() != null && !text.getText().isBlank())
@@ -125,7 +167,7 @@ public class ConnectView extends PageView {
             input.set(nameBlockingQueue.take());
             Platform.runLater(() -> {
                 Label label = new Label(input.get());
-                label.setPrefSize(width, height);
+                label.setPrefSize(WIDTH, HEIGHT);
                 label.setAlignment(Pos.CENTER);
                 label.setBorder(new Border(new BorderStroke(
                         Color.RED, BorderStrokeStyle.SOLID, CornerRadii.EMPTY, BorderWidths.DEFAULT)));
@@ -150,10 +192,18 @@ public class ConnectView extends PageView {
     }
 
 
+    private void setButton(int row, int column) {
+        this.buttons[row][column] = new Button("connect");
+        this.buttons[row][column].setPrefSize(WIDTH, HEIGHT);
+        this.buttons[row][column].setDisable(true);
+        this.buttons[row][column].setOnAction(actionEvent -> this.cellBlockingQueue.add(new int[]{row, column}));
+        this.grid.add(buttons[row][column], row, column);
+    }
+
     private void modifyButtons(@NotNull Consumer<Button> consumer) {
-        for (Button[] button : buttons) {
-            for (Button value : button)
-                consumer.accept(value);
+        for (int i = 0; i < COLUMNS; i++) {
+            for (int k = 0; k < ROWS; k++)
+                consumer.accept(this.buttons[i][k]);
         }
     }
 }

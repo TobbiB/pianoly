@@ -19,7 +19,7 @@ import java.util.concurrent.atomic.AtomicInteger;
 
 public class ExerciseView extends PageView {
 
-    private static List<Tab> tabs = Collections.emptyList();
+    private static List<Tab> TABS = Collections.emptyList();
 
 
     @FXML private AnchorPane root;
@@ -36,16 +36,16 @@ public class ExerciseView extends PageView {
     @Override
     @FXML
     protected void initialize() {
-        this.tabPane.getTabs().addAll(tabs);
+        this.tabPane.getTabs().addAll(TABS);
         this.mode.setItems(FXCollections.observableArrayList(ExerciseMode.values()));
         this.mode.setValue(ExerciseMode.NOTE);
         this.onModeChanged();
     }
 
     @Override
-    public void onClose() {
+    protected void onClose() {
         this.tabPane.getSelectionModel().selectFirst();
-        tabs = this.tabPane.getTabs().stream().skip(1).toList();
+        TABS = this.tabPane.getTabs().stream().skip(1).toList();
     }
 
     @FXML
@@ -92,8 +92,10 @@ public class ExerciseView extends PageView {
     private void update() {
         String base = "To Play: ";
         switch (this.mode.getValue()) {
+            //case FREE -> this.preview.setText(base + "Free");
             case NOTE, INTERVAL -> this.preview.setText(base + this.specs.get(0).getValue());
-            case CHORD -> this.preview.setText(base + this.specs.get(1).getValue() + ((Chord.Mode) this.specs.get(0).getValue()).getSymbol());
+            case CHORD -> this.preview.setText(base + this.specs.get(1).getValue()
+                    + ((Chord.Mode) this.specs.get(0).getValue()).getSymbol());
         }
         if (this.preview.getText().contains("null"))
             this.preview.setText(base + "<not specified>");

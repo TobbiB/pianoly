@@ -5,11 +5,13 @@ grg.music.pianoly.data
 grg.music.pianoly.data.exercises
 grg.music.pianoly.data.music
 grg.music.pianoly.gui
+grg.music.pianoly.gui.data
 grg.music.pianoly.gui.interfaces
 grg.music.pianoly.gui.listeners
 grg.music.pianoly.gui.views
 grg.music.pianoly.gui.window
 grg.music.pianoly.model
+grg.music.pianoly.model.settings
 grg.music.pianoly.model.students
 grg.music.pianoly.model.students.interfaces
 grg.music.pianoly.test

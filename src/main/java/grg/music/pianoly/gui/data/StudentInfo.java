@@ -12,7 +12,7 @@ public final class StudentInfo {
 
     public StudentInfo(@NotNull String name, int column, int row) {
         this.name = name;
-        this.color = Color.ORANGE;
+        this.color = Color.BLUE;
         this.display = name;
         this.column = column;
         this.row = row;
