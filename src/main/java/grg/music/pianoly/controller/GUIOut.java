@@ -19,6 +19,7 @@ public class GUIOut implements IGUIOut {
     @Override
     public void connectDevices() {
         this.model.getStudentsManager().setupStudents();
+        this.model.getStudentsManager().letStudentsWork();
     }
 
     @Override

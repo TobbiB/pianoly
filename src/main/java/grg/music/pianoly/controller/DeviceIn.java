@@ -1,5 +1,6 @@
 package grg.music.pianoly.controller;
 
+import grg.music.pianoly.data.music.Note;
 import grg.music.pianoly.model.settings.Settings;
 import grg.music.pianoly.model.students.interfaces.IDeviceIn;
 import org.jetbrains.annotations.NotNull;
@@ -7,10 +8,9 @@ import org.jetbrains.annotations.NotNull;
 import javax.sound.midi.*;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.concurrent.atomic.AtomicBoolean;
 
-public class DeviceIn implements IDeviceIn {
-
-    private final MidiDevice midiDevice;
+public record DeviceIn(MidiDevice midiDevice) implements IDeviceIn {
 
     public DeviceIn(@NotNull MidiDevice midiDevice) {
         this.midiDevice = midiDevice;
@@ -19,13 +19,13 @@ public class DeviceIn implements IDeviceIn {
 
     @Override
     public boolean waitForInput() {
-        boolean[] b = {false};
+        AtomicBoolean b = new AtomicBoolean(false);
         try {
             this.midiDevice.open();
             this.midiDevice.getTransmitter().setReceiver(new Receiver() {
                 @Override
                 public void send(MidiMessage message, long timeStamp) {
-                    b[0] = true;
+                    b.set(true);
                     Thread.currentThread().notify();
                 }
 
@@ -48,7 +48,37 @@ public class DeviceIn implements IDeviceIn {
         } catch (MidiUnavailableException e) {
             e.printStackTrace();
         }
-        return b[0];
+        return b.get();
+    }
+
+    @Override
+    public void loadDevice(@NotNull List<Note> notes, @NotNull Runnable runnable) {
+        try {
+            this.midiDevice.open();
+            this.midiDevice.getTransmitter().setReceiver(new Receiver() {
+                @Override
+                public void send(MidiMessage message, long timeStamp) {
+                    if (message instanceof ShortMessage sm) {
+                        if (sm.getCommand() == ShortMessage.NOTE_ON || sm.getCommand() == ShortMessage.NOTE_OFF) {
+                            Note note = Note.getNote(sm.getData1());
+                            if (!notes.removeIf(n -> n.isKeyEqual(note))) {
+                                if (sm.getCommand() == ShortMessage.NOTE_ON)
+                                    notes.add(note);
+                                else
+                                    System.out.println("[WARNING] No note found");
+                            }
+                            runnable.run();
+                        }
+                    }
+                }
+
+                @Override
+                public void close() {
+                }
+            });
+        } catch (MidiUnavailableException e) {
+            e.printStackTrace();
+        }
     }
 
     @Override

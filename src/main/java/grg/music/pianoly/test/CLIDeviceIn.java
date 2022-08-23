@@ -1,8 +1,11 @@
 package grg.music.pianoly.test;
 
+import grg.music.pianoly.data.music.Note;
 import grg.music.pianoly.model.settings.Settings;
 import grg.music.pianoly.model.students.interfaces.IDeviceIn;
+import org.jetbrains.annotations.NotNull;
 
+import java.util.List;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.LinkedBlockingQueue;
 import java.util.concurrent.TimeUnit;
@@ -31,6 +34,25 @@ public class CLIDeviceIn implements IDeviceIn {
         } catch (InterruptedException ignored) {
         }
         return input != null;
+    }
+
+    @Override
+    public void loadDevice(@NotNull List<Note> notes, @NotNull Runnable runnable) {
+        //noinspection InfiniteLoopStatement
+        while (true) {
+            String input = null;
+            try {
+                input = blockingQueue.take();
+            } catch (InterruptedException ignored) {
+            }
+            if (input != null && input.length() == 2 && Character.isDigit(input.charAt(0))
+                    && Character.isDigit(input.charAt(1)) && Integer.parseInt(input) < 50) {
+                Note note = Note.getNote(Integer.parseInt(input));
+                if (!notes.removeIf(n -> n.isKeyEqual(note)))
+                    notes.add(note);
+                runnable.run();
+            }
+        }
     }
 
     @Override

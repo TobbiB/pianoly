@@ -8,13 +8,15 @@ public class Note {
     public static final String[] NAMES_UP = {"C", "C♯", "D", "D♯", "E", "F", "F♯", "G", "G♯", "A", "A♯", "B"};
     public static final String[] NAMES_DOWN = {"C", "D♭", "D", "E♭", "E", "F", "G♭", "G", "A♭", "A", "B♭", "B"};
 
+    private static final Note[] NOTES = new Note[50];
+
     private final int key;
 
     private boolean on;
 
-    public Note(int key, boolean on) {
+    private Note(int key) {
         this.key = key;
-        this.on = on;
+        this.on = false;
     }
 
     public boolean isOn() {
@@ -46,6 +48,23 @@ public class Note {
             return null;
 
         return c + ((altered < 0) ? "♯" : "♭").repeat(Math.abs(altered)) + ((i / 12) - 1);
+    }
+
+
+    public boolean isKeyEqual(@Nullable Note note) {
+        return note != null && note.key == this.key;
+    }
+
+
+    @Nullable
+    public static Note getNote(int key) {
+        if (NOTES[0] == null) {
+            for (int i=0; i<NOTES.length; i++)
+                NOTES[i] = new Note(i);
+        }
+        if (key >= 0 && key < NOTES.length)
+            return NOTES[key];
+        return null;
     }
 
 }

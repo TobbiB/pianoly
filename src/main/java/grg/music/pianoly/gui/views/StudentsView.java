@@ -30,9 +30,6 @@ public class StudentsView {
     @FXML
     private void initialize() {
         INSTANCE = this;
-        if (STUDENTS.isEmpty()) {
-            return;
-        }
 
         for (int r = 0; r < ROWS; r++) {
             for (int c = 0; c < COLUMNS; c++) {
