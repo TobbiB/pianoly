@@ -29,6 +29,8 @@ public class ExerciseView extends PageView {
     @FXML private Label preview;
     @FXML private Button save;
 
+    @FXML private Button back, startStop;
+
     private final List<ComboBox<?>> specs = new LinkedList<>();
     private String name;
 
@@ -45,7 +47,11 @@ public class ExerciseView extends PageView {
     @Override
     protected void onClose() {
         this.tabPane.getSelectionModel().selectFirst();
-        TABS = this.tabPane.getTabs().stream().skip(1).toList();
+        TABS = this.tabPane.getTabs().stream().skip(2).toList();
+    }
+
+    @FXML
+    private void onSelect() {
     }
 
     @FXML
@@ -82,10 +88,28 @@ public class ExerciseView extends PageView {
         this.update();
         GUI.getInstance().getOut().exerciseCreated(this.mode.getValue(), this.name);
         Tab tab = new Tab(this.name);
-        tab.setId(String.valueOf(this.tabPane.getTabs().size() - 1));
+        StudentsView students = StudentsView.load();
+        if (students != null)
+            tab.setContent(students.getGrid());
+        tab.setOnSelectionChanged(event -> this.onSelect());
+        tab.setId(String.valueOf(this.tabPane.getTabs().size() - 2));
         tab.setOnClosed(event -> GUI.getInstance().getOut().exerciseClosed(Integer.parseInt(tab.getId())));
         this.tabPane.getTabs().add(tab);
         this.tabPane.getSelectionModel().select(tab);
+    }
+
+    @FXML
+    private void onBack() {
+        GUI.getInstance().setMainPage();
+    }
+
+    @FXML
+    private void onStart() {
+        GUI.getInstance().getOut().startStopWorking();
+        if (this.startStop.getText().equals("Start"))
+            this.startStop.setText("Stop");
+        else if (this.startStop.getText().equals("Stop"))
+            this.startStop.setText("Start");
     }
 
 
@@ -127,5 +151,4 @@ public class ExerciseView extends PageView {
             });
         }
     }
-
 }

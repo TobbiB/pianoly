@@ -16,6 +16,9 @@ public class Student {
 
     private final List<Note> notes = new LinkedList<>();
 
+    private Thread working;
+
+
     public Student(@NotNull String name, @NotNull IDeviceOut out, @NotNull IDeviceIn in) {
         this.name = name;
         this.out = out;
@@ -24,8 +27,18 @@ public class Student {
     }
 
     public void letWork() {
-         new Thread(() -> in.loadDevice(this.notes,
-                 () -> System.out.println(this.name + ": " + this.notes.size()))).start();
+        if (this.working == null) {
+            this.working = new Thread(() -> in.loadDevice(this.notes,
+                    () -> System.out.println(this.name + ": " + this.notes.size())));
+            this.working.start();
+        }
+        /*
+        if (this.working.isInterrupted())
+            this.working.start();
+        else
+            this.working.interrupt();
+
+         */
     }
 
 

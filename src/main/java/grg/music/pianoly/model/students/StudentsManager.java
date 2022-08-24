@@ -68,7 +68,7 @@ public class StudentsManager {
         this.students = students;
     }
 
-    public void letStudentsWork() {
+    public void startStopWorking() {
         for (Student student : this.students)
             student.letWork();
     }

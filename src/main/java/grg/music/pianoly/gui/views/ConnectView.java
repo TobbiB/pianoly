@@ -2,7 +2,6 @@ package grg.music.pianoly.gui.views;
 
 import grg.music.pianoly.data.Page;
 import grg.music.pianoly.gui.GUI;
-import grg.music.pianoly.gui.data.StudentInfo;
 import grg.music.pianoly.model.settings.Settings;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
@@ -32,7 +31,7 @@ public class ConnectView extends PageView {
     @FXML private GridPane grid;
     @FXML private Button back, start;
 
-    private final List<StudentInfo> studentInfos = new LinkedList<>();
+    private final List<StudentsView.StudentInfo> studentInfos = new LinkedList<>();
     private final Button[][] buttons = new Button[MAX_COLUMNS][MAX_ROWS];
 
     private final BlockingQueue<int[]> cellBlockingQueue = new ArrayBlockingQueue<>(1);
@@ -178,7 +177,7 @@ public class ConnectView extends PageView {
         } catch (InterruptedException ignored) {
         }
 
-        this.studentInfos.add(new StudentInfo(input.get(), cell.get()[0], cell.get()[1]));
+        this.studentInfos.add(new StudentsView.StudentInfo(input.get(), cell.get()[0], cell.get()[1]));
         return input.get();
     }
 

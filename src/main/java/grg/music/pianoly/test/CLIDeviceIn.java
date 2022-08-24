@@ -6,8 +6,8 @@ import grg.music.pianoly.model.students.interfaces.IDeviceIn;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
+import java.util.concurrent.ArrayBlockingQueue;
 import java.util.concurrent.BlockingQueue;
-import java.util.concurrent.LinkedBlockingQueue;
 import java.util.concurrent.TimeUnit;
 
 public class CLIDeviceIn implements IDeviceIn {
@@ -15,15 +15,18 @@ public class CLIDeviceIn implements IDeviceIn {
     private static CLIDeviceIn[] devices;
 
     private final int id;
-    private final BlockingQueue<String> blockingQueue = new LinkedBlockingQueue<>();
+    private final BlockingQueue<String> blockingQueue = new ArrayBlockingQueue<>(1);
 
     public CLIDeviceIn(int id) {
         this.id = id;
     }
 
     public void addInput(String s) {
-        this.blockingQueue.add(s);
-
+        try {
+            this.blockingQueue.put(s);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
     }
 
     @Override

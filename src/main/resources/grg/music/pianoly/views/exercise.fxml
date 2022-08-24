@@ -3,14 +3,16 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<?import javafx.scene.text.Font?>
 <AnchorPane fx:id="root" fx:controller="grg.music.pianoly.gui.views.ExerciseView"
             xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1">
 
-    <TabPane fx:id="tabPane" tabMinHeight="30" tabMinWidth="20"
-             AnchorPane.bottomAnchor="0" AnchorPane.leftAnchor="0" AnchorPane.rightAnchor="0" AnchorPane.topAnchor="0">
-        <Tab closable="false" text="+">
-            <VBox alignment="TOP_CENTER" spacing="20">
+    <TabPane fx:id="tabPane" tabMinHeight="40" tabMinWidth="50" AnchorPane.bottomAnchor="200"
+             AnchorPane.leftAnchor="0" AnchorPane.rightAnchor="0" AnchorPane.topAnchor="0">
+        <Tab closable="false" text="Home" onSelectionChanged="#onSelect">
+            <fx:include source="students.fxml"/>
+        </Tab>
+        <Tab closable="false" text="Create exercise">
+            <VBox alignment="CENTER" spacing="20">
                 <HBox alignment="CENTER" spacing="20">
                     <Label text="Mode:"/>
                     <ComboBox fx:id="mode" prefHeight="30" prefWidth="100" onAction="#onModeChanged"/>
@@ -22,13 +24,18 @@
         </Tab>
     </TabPane>
 
-    <VBox alignment="CENTER" spacing="20" AnchorPane.bottomAnchor="50" AnchorPane.leftAnchor="50" AnchorPane.rightAnchor="50">
+    <Button fx:id="back" prefHeight="50" prefWidth="200" text="Back to menu" onAction="#onBack"
+            AnchorPane.bottomAnchor="50" AnchorPane.leftAnchor="50"/>
+    <Button fx:id="startStop" prefHeight="50" prefWidth="200" text="Start" onAction="#onStart"
+            AnchorPane.bottomAnchor="50" AnchorPane.rightAnchor="50"/>
+
+    <!--VBox alignment="CENTER" spacing="20" AnchorPane.bottomAnchor="50" AnchorPane.leftAnchor="50" AnchorPane.rightAnchor="50">
         <Label text="Students:">
             <font>
                 <Font size="28"/>
             </font>
         </Label>
         <fx:include source="students.fxml"/>
-    </VBox>
+    </VBox-->
 
 </AnchorPane>

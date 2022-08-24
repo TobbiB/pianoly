@@ -2,7 +2,8 @@ package grg.music.pianoly.utils;
 
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.ToggleGroup;
-import javafx.scene.layout.Pane;
+import javafx.scene.layout.*;
+import javafx.scene.paint.Color;
 import org.jetbrains.annotations.NotNull;
 
 public final class FXUtils {
@@ -17,5 +18,10 @@ public final class FXUtils {
             pane.getChildren().add(buttons[i]);
         }
         return buttons;
+    }
+
+    public static void setBorderColor(@NotNull Region node, @NotNull Color color) {
+        node.setBorder(new Border(new BorderStroke(color,
+                BorderStrokeStyle.SOLID, CornerRadii.EMPTY, BorderWidths.DEFAULT)));
     }
 }

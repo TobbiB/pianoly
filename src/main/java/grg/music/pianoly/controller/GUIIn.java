@@ -30,6 +30,6 @@ public class GUIIn implements IGUIIn {
 
     @Override
     public void studentsDisplayChanged(@NotNull String student, @Nullable String text, @Nullable Color color) {
-        StudentsView.changeLabel(student, text, color);
+        //StudentsView.changeLabel(student, text, color);
     }
 }

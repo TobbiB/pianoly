@@ -9,6 +9,8 @@ public interface IGUIOut {
 
     void connectDevices();
 
+    void startStopWorking();
+
     void exerciseCreated(@NotNull ExerciseMode value, @NotNull String name);
 
     void exerciseClosed(int id);
