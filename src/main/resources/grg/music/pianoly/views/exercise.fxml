@@ -19,6 +19,7 @@
                 </HBox>
                 <HBox fx:id="specsBox" alignment="CENTER" spacing="20"/>
                 <Label fx:id="preview" text="To Play: "/>
+                <ColorPicker fx:id="color" onAction="#update"/>
                 <Button fx:id="save" prefHeight="30" prefWidth="100" disable="true" text="Save" onAction="#onSave"/>
             </VBox>
         </Tab>
@@ -28,14 +29,5 @@
             AnchorPane.bottomAnchor="50" AnchorPane.leftAnchor="50"/>
     <Button fx:id="startStop" prefHeight="50" prefWidth="200" text="Start" onAction="#onStart"
             AnchorPane.bottomAnchor="50" AnchorPane.rightAnchor="50"/>
-
-    <!--VBox alignment="CENTER" spacing="20" AnchorPane.bottomAnchor="50" AnchorPane.leftAnchor="50" AnchorPane.rightAnchor="50">
-        <Label text="Students:">
-            <font>
-                <Font size="28"/>
-            </font>
-        </Label>
-        <fx:include source="students.fxml"/>
-    </VBox-->
 
 </AnchorPane>

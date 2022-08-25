@@ -1,8 +1,6 @@
 package grg.music.pianoly.gui.interfaces;
 
-import javafx.scene.paint.Color;
 import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 
 public interface IGUIIn {
 
@@ -12,5 +10,5 @@ public interface IGUIIn {
 
     void setupFinished();
 
-    void studentsDisplayChanged(@NotNull String student, @Nullable String text, @Nullable Color color);
+    void exerciseCompleted(@NotNull String student);
 }

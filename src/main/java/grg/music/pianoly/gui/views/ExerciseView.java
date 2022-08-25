@@ -1,5 +1,6 @@
 package grg.music.pianoly.gui.views;
 
+import grg.music.pianoly.data.exercises.Exercise;
 import grg.music.pianoly.data.exercises.ExerciseMode;
 import grg.music.pianoly.data.music.Chord;
 import grg.music.pianoly.data.music.Interval;
@@ -27,6 +28,7 @@ public class ExerciseView extends PageView {
     @FXML private ComboBox<ExerciseMode> mode;
     @FXML private HBox specsBox;
     @FXML private Label preview;
+    @FXML private ColorPicker color;
     @FXML private Button save;
 
     @FXML private Button back, startStop;
@@ -48,6 +50,7 @@ public class ExerciseView extends PageView {
     protected void onClose() {
         this.tabPane.getSelectionModel().selectFirst();
         TABS = this.tabPane.getTabs().stream().skip(2).toList();
+        StudentsView.close();
     }
 
     @FXML
@@ -86,14 +89,22 @@ public class ExerciseView extends PageView {
     @FXML
     private void onSave() {
         this.update();
-        GUI.getInstance().getOut().exerciseCreated(this.mode.getValue(), this.name);
+        Exercise<ExerciseMode> exercise = new Exercise<>(this.mode.getValue(), this.color.getValue(), this.name);
+        GUI.getInstance().getOut().exerciseCreated(exercise);
+        StudentsView.getExercises().add(exercise);
+        StudentsView students = StudentsView.load(exercise);
+        if (students == null)
+            return;
+        students.updateLabels();
         Tab tab = new Tab(this.name);
-        StudentsView students = StudentsView.load();
-        if (students != null)
-            tab.setContent(students.getGrid());
-        tab.setOnSelectionChanged(event -> this.onSelect());
+        tab.setContent(students.getGrid());
         tab.setId(String.valueOf(this.tabPane.getTabs().size() - 2));
-        tab.setOnClosed(event -> GUI.getInstance().getOut().exerciseClosed(Integer.parseInt(tab.getId())));
+        tab.setOnSelectionChanged(event -> this.onSelect());
+        tab.setOnClosed(event -> {
+            GUI.getInstance().getOut().exerciseClosed(Integer.parseInt(tab.getId()));
+            StudentsView.getExercises().remove(exercise);
+            students.onClose();
+        });
         this.tabPane.getTabs().add(tab);
         this.tabPane.getSelectionModel().select(tab);
     }
@@ -112,7 +123,7 @@ public class ExerciseView extends PageView {
             this.startStop.setText("Start");
     }
 
-
+    @FXML
     private void update() {
         String base = "To Play: ";
         switch (this.mode.getValue()) {
@@ -126,6 +137,7 @@ public class ExerciseView extends PageView {
         else
             this.name = this.mode.getValue() + ": " + this.preview.getText().replaceAll(base, "");
 
+        FXUtils.setBorderColor(this.preview, this.color.getValue());
         this.save.setDisable(this.preview.getText().equals(base + "<not specified>"));
     }
 

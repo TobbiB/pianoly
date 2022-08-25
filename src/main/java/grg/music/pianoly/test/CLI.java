@@ -17,7 +17,7 @@ public class CLI {
                             && Integer.parseInt(s[0]) < CLIDeviceIn.getDevices().length)
                         ins[Integer.parseInt(s[0])].addInput(s[1]);
                     else
-                        GUI.getInstance().getIn().studentsDisplayChanged(s[0], s[1], null);
+                        GUI.getInstance().getIn().exerciseCompleted(s[0]);
                 }
             }
         }).start();

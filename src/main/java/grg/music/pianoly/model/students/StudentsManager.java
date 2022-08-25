@@ -15,6 +15,8 @@ public class StudentsManager {
 
     private List<Student> students;
 
+    private boolean started = false;
+
     public StudentsManager() {
         // TODO
         this.students = new ArrayList<>();
@@ -69,8 +71,12 @@ public class StudentsManager {
     }
 
     public void startStopWorking() {
-        for (Student student : this.students)
-            student.letWork();
+        if (!this.started) {
+            for (Student student : this.students) {
+                student.letWork();
+            }
+            this.started = true;
+        }
     }
 
     public List<Student> getStudents() {

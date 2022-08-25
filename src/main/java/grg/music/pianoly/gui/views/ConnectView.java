@@ -3,6 +3,7 @@ package grg.music.pianoly.gui.views;
 import grg.music.pianoly.data.Page;
 import grg.music.pianoly.gui.GUI;
 import grg.music.pianoly.model.settings.Settings;
+import grg.music.pianoly.utils.FXUtils;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.geometry.Pos;
@@ -31,7 +32,7 @@ public class ConnectView extends PageView {
     @FXML private GridPane grid;
     @FXML private Button back, start;
 
-    private final List<StudentsView.StudentInfo> studentInfos = new LinkedList<>();
+    private final List<StudentsView.StudentCell> studentCells = new LinkedList<>();
     private final Button[][] buttons = new Button[MAX_COLUMNS][MAX_ROWS];
 
     private final BlockingQueue<int[]> cellBlockingQueue = new ArrayBlockingQueue<>(1);
@@ -168,8 +169,7 @@ public class ConnectView extends PageView {
                 Label label = new Label(input.get());
                 label.setPrefSize(WIDTH, HEIGHT);
                 label.setAlignment(Pos.CENTER);
-                label.setBorder(new Border(new BorderStroke(
-                        Color.RED, BorderStrokeStyle.SOLID, CornerRadii.EMPTY, BorderWidths.DEFAULT)));
+                FXUtils.setBorderColor(label, Color.BLACK);
                 grid.getChildren().removeIf(node -> GridPane.getColumnIndex(node) == cell.get()[0]
                         && GridPane.getRowIndex(node) == cell.get()[1]);
                 grid.add(label, cell.get()[0], cell.get()[1]);
@@ -177,7 +177,7 @@ public class ConnectView extends PageView {
         } catch (InterruptedException ignored) {
         }
 
-        this.studentInfos.add(new StudentsView.StudentInfo(input.get(), cell.get()[0], cell.get()[1]));
+        this.studentCells.add(new StudentsView.StudentCell(input.get(), cell.get()[0], cell.get()[1]));
         return input.get();
     }
 
@@ -187,7 +187,7 @@ public class ConnectView extends PageView {
             this.label.setText("Setup Finished ☺");
             this.back.setDisable(false);
         });
-        StudentsView.setGridData(this.studentInfos, this.grid.getColumnCount(), this.grid.getRowCount());
+        StudentsView.setGridData(this.studentCells, this.grid.getColumnCount(), this.grid.getRowCount());
     }
 
 

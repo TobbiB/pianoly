@@ -27,11 +27,17 @@ public final class WindowSettings<T> {
 
     public static final WindowSettings<Pair<Integer, Integer>> SIZE = new WindowSettings<>(new Pair<>(1024, 576),
             (stage, size) -> {
-        stage.setWidth(size.getKey());
-        stage.setHeight(size.getValue());
-    });
+                stage.setWidth(size.getKey());
+                stage.setHeight(size.getValue());
+            });
 
-    public static final WindowSettings<Boolean> RESIZABLE = new WindowSettings<>(false, Stage::setResizable);
+    public static final WindowSettings<Pair<Integer, Integer>> MIN_SIZE = new WindowSettings<>(new Pair<>(1024, 576),
+            (stage, size) -> {
+                stage.setMinWidth(size.getKey());
+                stage.setMinHeight(size.getValue());
+            });
+
+    public static final WindowSettings<Boolean> RESIZABLE = new WindowSettings<>(true, Stage::setResizable);
 
 
     private final BiConsumer<Stage, T> consumer;
