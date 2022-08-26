@@ -89,7 +89,7 @@ public class StudentsView {
                 if (this.exercise == null) {
                     Platform.runLater(() -> {
                         label.setText(student + " (" + (EXERCISE_INDICES[i] + ((ex != null) ? 0 : -1) + ")"
-                                + "\n" + ((ex != null) ? ex.toString() : "Finished")));
+                                + "\n" + ((ex != null) ? ex.getDisplay() : "Finished")));
                         FXUtils.setBorder(label, ex != null ? ex.color() : Color.GREEN, BORDER_RADII);
                     });
                 } else

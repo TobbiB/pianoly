@@ -4,7 +4,8 @@ import grg.music.pianoly.data.exercises.Exercise;
 import grg.music.pianoly.data.exercises.ExerciseMode;
 import grg.music.pianoly.data.music.Chord;
 import grg.music.pianoly.data.music.Interval;
-import grg.music.pianoly.data.music.Note;
+import grg.music.pianoly.data.music.MusicElement;
+import grg.music.pianoly.data.music.Note.Note;
 import grg.music.pianoly.gui.GUI;
 import grg.music.pianoly.utils.FXUtils;
 import javafx.collections.FXCollections;
@@ -95,7 +96,10 @@ public class ExerciseView extends PageView {
         Object[] objects = new Object[this.specs.size()];
         for (int i = 0; i < this.specs.size(); i++)
             objects[i] = this.specs.get(i).getValue();
-        Exercise<ExerciseMode> exercise = new Exercise<>(this.mode.getValue(), this.color.getValue(), objects);
+        MusicElement musicElement = this.mode.getValue().createMusicElement(objects);
+        if (musicElement == null)
+            return;
+        Exercise<?> exercise = new Exercise<>(musicElement, this.color.getValue());
         GUI.getInstance().getOut().exerciseCreated(exercise);
         StudentsView.addExercise(exercise);
         StudentsView students = StudentsView.load(exercise);
@@ -103,22 +107,20 @@ public class ExerciseView extends PageView {
             return;
         students.updateLabels();
 
+        // TODO
         Label label = new Label("♪");
-        label.setGraphic(new ImageView(exercise.mode().getImage()));
+        label.setGraphic(new ImageView(this.mode.getValue().getImage()));
         FXUtils.setBorder(label, exercise.color(), 20);
         label.setPadding(new Insets(1));
 
-        Tab tab = new Tab(exercise.toString());
+        Tab tab = new Tab(exercise.getDisplay());
         tab.setGraphic(label);
         tab.setContent(students.getGrid());
         tab.setId(String.valueOf(this.tabPane.getTabs().size() - 2));
         tab.setOnSelectionChanged(event -> this.onSelect());
         // TODO
         tab.setClosable(false);
-        tab.setOnClosed(event -> {
-            GUI.getInstance().getOut().exerciseClosed(Integer.parseInt(tab.getId()));
-            students.onClose();
-        });
+        tab.setOnClosed(event -> students.onClose());
         this.tabPane.getTabs().add(tab);
         this.tabPane.getSelectionModel().select(tab);
     }
@@ -145,16 +147,14 @@ public class ExerciseView extends PageView {
             case CHORD -> this.preview.setText("" + this.specs.get(1).getValue()
                     + ((Chord.Mode) this.specs.get(0).getValue()).getSymbol());
         }
-        boolean saveable = true;
+        boolean savable = true;
         if (this.preview.getText().contains("null")) {
             this.preview.setText("<not specified>");
-            saveable = false;
+            savable = false;
         }
-        //else
-            //this.name = this.mode.getValue() + ": " + this.preview.getText().replaceAll(base, "");
 
-        FXUtils.setBorder(this.preview, (saveable) ? this.color.getValue() : null, 20);
-        this.save.setDisable(!saveable || this.color.getValue().equals(Color.WHITE));
+        FXUtils.setBorder(this.preview, (savable) ? this.color.getValue() : null, 20);
+        this.save.setDisable(!savable || this.color.getValue().equals(Color.WHITE));
     }
 
     private void setUpDownSelection(int index) {

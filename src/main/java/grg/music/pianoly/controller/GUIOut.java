@@ -27,12 +27,7 @@ public class GUIOut implements IGUIOut {
     }
 
     @Override
-    public void exerciseCreated(@NotNull Exercise<ExerciseMode> exercise) {
+    public void exerciseCreated(@NotNull Exercise<?> exercise) {
         Model.getInstance().getExercises().add(exercise);
-    }
-
-    @Override
-    public void exerciseClosed(int id) {
-        this.model.getExercises().remove(id);
     }
 }

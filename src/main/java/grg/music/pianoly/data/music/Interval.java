@@ -2,9 +2,9 @@ package grg.music.pianoly.data.music;
 
 import org.jetbrains.annotations.NotNull;
 
-public enum Interval {
+public enum Interval implements MusicElement {
 
-    UNISONE(" Unisone"),
+    UNISONE("Unisone"),
     MIN_SECOND("Minor Second"),
     MAJ_SECOND("Major Second"),
     MIN_THIRD("Minor Third"),
@@ -23,6 +23,12 @@ public enum Interval {
     }
 
     private final String name;
+
+    @Override
+    public String getDisplay() {
+        //return this.name.replace("Minor", "Min").replace("Major", "Maj");
+        return this.name;
+    }
 
     @Override
     public String toString() {

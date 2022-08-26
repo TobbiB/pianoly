@@ -1,6 +1,6 @@
 package grg.music.pianoly.model.students;
 
-import grg.music.pianoly.data.music.Note;
+import grg.music.pianoly.data.music.Note.Note_OLD;
 import grg.music.pianoly.model.students.interfaces.IDeviceIn;
 import grg.music.pianoly.model.students.interfaces.IDeviceOut;
 import org.jetbrains.annotations.NotNull;
@@ -14,7 +14,7 @@ public class Student {
     private final IDeviceOut out;
     private final IDeviceIn in;
 
-    private final List<Note> notes = new LinkedList<>();
+    private final List<Note_OLD> notes = new LinkedList<>();
 
     private Thread working;
 

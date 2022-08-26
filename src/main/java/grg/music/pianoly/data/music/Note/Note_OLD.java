@@ -1,23 +1,20 @@
-package grg.music.pianoly.data.music;
+package grg.music.pianoly.data.music.Note;
 
 import org.jetbrains.annotations.Nullable;
 
-public class Note {
+public class Note_OLD {
 
-    public static final char[] NAMES = {'C', '?', 'D', '?', 'E', 'F', '?', 'G', '?', 'A', '?', 'B'};
-    public static final String[] NAMES_UP = {"C", "C♯", "D", "D♯", "E", "F", "F♯", "G", "G♯", "A", "A♯", "B"};
-    public static final String[] NAMES_DOWN = {"C", "D♭", "D", "E♭", "E", "F", "G♭", "G", "A♭", "A", "B♭", "B"};
-
-    private static final Note[] NOTES = new Note[50];
+    private static final Note_OLD[] NOTES = new Note_OLD[50];
 
     private final int key;
 
     private boolean on;
 
-    private Note(int key) {
+    private Note_OLD(int key) {
         this.key = key;
         this.on = false;
     }
+
 
     public boolean isOn() {
         return this.on;
@@ -42,7 +39,7 @@ public class Note {
             return null;
 
         int i = this.key + altered;
-        char c = NAMES[i % 12];
+        char c = Note.NAMES[i % 12];
 
         if (c == '?')
             return null;
@@ -51,16 +48,16 @@ public class Note {
     }
 
 
-    public boolean isKeyEqual(@Nullable Note note) {
+    public boolean isKeyEqual(@Nullable Note_OLD note) {
         return note != null && note.key == this.key;
     }
 
 
     @Nullable
-    public static Note getNote(int key) {
+    public static Note_OLD getNote(int key) {
         if (NOTES[0] == null) {
             for (int i=0; i<NOTES.length; i++)
-                NOTES[i] = new Note(i);
+                NOTES[i] = new Note_OLD(i);
         }
         if (key >= 0 && key < NOTES.length)
             return NOTES[key];

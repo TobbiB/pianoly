@@ -1,6 +1,6 @@
 package grg.music.pianoly.controller;
 
-import grg.music.pianoly.data.music.Note;
+import grg.music.pianoly.data.music.Note.Note_OLD;
 import grg.music.pianoly.model.settings.Settings;
 import grg.music.pianoly.model.students.interfaces.IDeviceIn;
 import org.jetbrains.annotations.NotNull;
@@ -52,7 +52,7 @@ public record DeviceIn(MidiDevice midiDevice) implements IDeviceIn {
     }
 
     @Override
-    public void loadDevice(@NotNull List<Note> notes, @NotNull Runnable runnable) {
+    public void loadDevice(@NotNull List<Note_OLD> notes, @NotNull Runnable runnable) {
         try {
             this.midiDevice.open();
             this.midiDevice.getTransmitter().setReceiver(new Receiver() {
@@ -60,7 +60,7 @@ public record DeviceIn(MidiDevice midiDevice) implements IDeviceIn {
                 public void send(MidiMessage message, long timeStamp) {
                     if (message instanceof ShortMessage sm) {
                         if (sm.getCommand() == ShortMessage.NOTE_ON || sm.getCommand() == ShortMessage.NOTE_OFF) {
-                            Note note = Note.getNote(sm.getData1());
+                            Note_OLD note = Note_OLD.getNote(sm.getData1());
                             if (!notes.removeIf(n -> n.isKeyEqual(note))) {
                                 if (sm.getCommand() == ShortMessage.NOTE_ON)
                                     notes.add(note);

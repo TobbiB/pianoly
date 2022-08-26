@@ -1,8 +1,10 @@
 package grg.music.pianoly.data.music;
 
+import grg.music.pianoly.data.exercises.ExerciseMode;
+import grg.music.pianoly.data.music.Note.ExerciseNote;
 import org.jetbrains.annotations.NotNull;
 
-public class Chord {
+public class Chord implements MusicElement {
 
     public enum Mode {
 
@@ -23,9 +25,35 @@ public class Chord {
             return this.symbol;
         }
 
+        public String getDisplay() {
+            return this.name;
+        }
+
         @Override
         public String toString() {
             return this.name;
         }
+    }
+
+
+    private final Mode mode;
+    private final ExerciseNote note;
+
+    public Chord(Mode mode, ExerciseNote note) {
+        this.mode = mode;
+        this.note = note;
+    }
+
+    @Override
+    public String getDisplay() {
+        return this.note.getDisplay() + this.mode.getSymbol();
+    }
+
+    public Mode getMode() {
+        return this.mode;
+    }
+
+    public ExerciseNote getNote() {
+        return this.note;
     }
 }
