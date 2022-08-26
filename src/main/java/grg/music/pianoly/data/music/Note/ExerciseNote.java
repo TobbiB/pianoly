@@ -3,6 +3,8 @@ package grg.music.pianoly.data.music.Note;
 import grg.music.pianoly.data.music.MusicElement;
 import org.jetbrains.annotations.Nullable;
 
+import java.util.List;
+
 public class ExerciseNote extends Note implements MusicElement {
 
     private final boolean up;
@@ -10,6 +12,12 @@ public class ExerciseNote extends Note implements MusicElement {
     private ExerciseNote(int key, boolean up) {
         super(key);
         this.up = up;
+    }
+
+
+    @Override
+    public boolean checkCompleted(List<DeviceNote> notes) {
+        return notes.size() == 1 && notes.get(0).isKeyEqual(this);
     }
 
     @Override

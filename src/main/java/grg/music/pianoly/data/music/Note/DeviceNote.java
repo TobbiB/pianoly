@@ -5,13 +5,13 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.Objects;
 
-public class KeyboardNote extends Note {
+public class DeviceNote extends Note {
 
-    private static final KeyboardNote[] NOTES = new KeyboardNote[50];
+    private static final DeviceNote[] NOTES = new DeviceNote[50];
 
     private boolean playing = false;
 
-    private KeyboardNote(int key) {
+    private DeviceNote(int key) {
         super(key);
     }
 
@@ -28,10 +28,10 @@ public class KeyboardNote extends Note {
     }
 
     @Nullable
-    public static KeyboardNote getNote(int key) {
+    public static DeviceNote getNote(int key) {
         if (NOTES[0] == null) {
             for (int i=0; i<NOTES.length; i++)
-                NOTES[i] = new KeyboardNote(i);
+                NOTES[i] = new DeviceNote(i);
         }
         if (key >= 0 && key < NOTES.length)
             return NOTES[key];

@@ -1,6 +1,6 @@
 package grg.music.pianoly.model.students;
 
-import grg.music.pianoly.data.music.Note.Note_OLD;
+import grg.music.pianoly.data.music.Note.DeviceNote;
 import grg.music.pianoly.model.students.interfaces.IDeviceIn;
 import grg.music.pianoly.model.students.interfaces.IDeviceOut;
 import org.jetbrains.annotations.NotNull;
@@ -13,8 +13,8 @@ public class Student {
     private final String name;
     private final IDeviceOut out;
     private final IDeviceIn in;
-
-    private final List<Note_OLD> notes = new LinkedList<>();
+    private final ExerciseManager exerciseManager;
+    private final List<DeviceNote> notes = new LinkedList<>();
 
     private Thread working;
 
@@ -23,13 +23,13 @@ public class Student {
         this.name = name;
         this.out = out;
         this.in = in;
+        this.exerciseManager = new ExerciseManager(this.name, this.notes);
 
     }
 
     public void letWork() {
         if (this.working == null) {
-            this.working = new Thread(() -> in.loadDevice(this.notes,
-                    () -> System.out.println(this.name + ": " + this.notes.size())));
+            this.working = new Thread(() -> in.loadDevice(this.notes, this.exerciseManager::checkExercise));
             this.working.start();
         }
         /*

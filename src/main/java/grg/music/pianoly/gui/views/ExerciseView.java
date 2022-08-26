@@ -2,8 +2,8 @@ package grg.music.pianoly.gui.views;
 
 import grg.music.pianoly.data.exercises.Exercise;
 import grg.music.pianoly.data.exercises.ExerciseMode;
-import grg.music.pianoly.data.music.Chord;
-import grg.music.pianoly.data.music.Interval;
+import grg.music.pianoly.data.music.Chord.ChordMode;
+import grg.music.pianoly.data.music.Interval.Interval;
 import grg.music.pianoly.data.music.MusicElement;
 import grg.music.pianoly.data.music.Note.Note;
 import grg.music.pianoly.gui.GUI;
@@ -78,8 +78,8 @@ public class ExerciseView extends PageView {
             }
             case CHORD -> {
                 this.specsBox.getChildren().add(new Label("Chord:"));
-                ComboBox<Chord.Mode> chordMode = new ComboBox<>(FXCollections.observableArrayList(Chord.Mode.values()));
-                chordMode.setValue(Chord.Mode.MAJOR);
+                ComboBox<ChordMode> chordMode = new ComboBox<>(FXCollections.observableArrayList(ChordMode.values()));
+                chordMode.setValue(ChordMode.MAJOR);
                 this.specs.add(chordMode);
                 this.specsBox.getChildren().add(chordMode);
                 this.setUpDownSelection(2);
@@ -145,7 +145,7 @@ public class ExerciseView extends PageView {
             //case FREE -> this.preview.setText(base + "Free");
             case NOTE, INTERVAL -> this.preview.setText("" + this.specs.get(0).getValue());
             case CHORD -> this.preview.setText("" + this.specs.get(1).getValue()
-                    + ((Chord.Mode) this.specs.get(0).getValue()).getSymbol());
+                    + ((ChordMode) this.specs.get(0).getValue()).getSymbol());
         }
         boolean savable = true;
         if (this.preview.getText().contains("null")) {

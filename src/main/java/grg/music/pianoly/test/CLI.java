@@ -1,7 +1,5 @@
 package grg.music.pianoly.test;
 
-import grg.music.pianoly.gui.GUI;
-
 import java.util.Scanner;
 
 public class CLI {
@@ -16,8 +14,6 @@ public class CLI {
                     if (s[0].length() == 1 && Character.isDigit(s[0].charAt(0))
                             && Integer.parseInt(s[0]) < CLIDeviceIn.getDevices().length)
                         ins[Integer.parseInt(s[0])].addInput(s[1]);
-                    else
-                        GUI.getInstance().getIn().exerciseCompleted(s[0]);
                 }
             }
         }).start();

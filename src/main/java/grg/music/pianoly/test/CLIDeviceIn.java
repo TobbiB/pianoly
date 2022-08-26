@@ -1,6 +1,6 @@
 package grg.music.pianoly.test;
 
-import grg.music.pianoly.data.music.Note.Note_OLD;
+import grg.music.pianoly.data.music.Note.DeviceNote;
 import grg.music.pianoly.model.settings.Settings;
 import grg.music.pianoly.model.students.interfaces.IDeviceIn;
 import org.jetbrains.annotations.NotNull;
@@ -40,7 +40,7 @@ public class CLIDeviceIn implements IDeviceIn {
     }
 
     @Override
-    public void loadDevice(@NotNull List<Note_OLD> notes, @NotNull Runnable runnable) {
+    public void loadDevice(@NotNull List<DeviceNote> notes, @NotNull Runnable runnable) {
         //noinspection InfiniteLoopStatement
         while (true) {
             String input = null;
@@ -50,10 +50,12 @@ public class CLIDeviceIn implements IDeviceIn {
             }
             if (input != null && input.length() == 2 && Character.isDigit(input.charAt(0))
                     && Character.isDigit(input.charAt(1)) && Integer.parseInt(input) < 50) {
-                Note_OLD note = Note_OLD.getNote(Integer.parseInt(input));
+                DeviceNote note = DeviceNote.getNote(Integer.parseInt(input));
                 if (!notes.removeIf(n -> n.isKeyEqual(note)))
                     notes.add(note);
                 runnable.run();
+                if (note != null)
+                    System.out.println((notes.contains(note) ? "On: " : "Off: ") + note.getAsExerciseNote(true).getDisplay());
             }
         }
     }

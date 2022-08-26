@@ -1,7 +1,8 @@
 package grg.music.pianoly.data.exercises;
 
-import grg.music.pianoly.data.music.Chord;
-import grg.music.pianoly.data.music.Interval;
+import grg.music.pianoly.data.music.Chord.Chord;
+import grg.music.pianoly.data.music.Chord.ChordMode;
+import grg.music.pianoly.data.music.Interval.Interval;
 import grg.music.pianoly.data.music.MusicElement;
 import grg.music.pianoly.data.music.Note.ExerciseNote;
 import javafx.scene.image.Image;
@@ -21,7 +22,7 @@ public enum ExerciseMode {
     INTERVAL("Interval", new Image(new ByteArrayInputStream("♫".getBytes(StandardCharsets.UTF_8))),
             objects -> objects[0] instanceof Interval interval ? interval : null),
     CHORD("Chord", new Image(new ByteArrayInputStream("♬".getBytes(StandardCharsets.UTF_8))), objects -> {
-        if (objects.length == 2 && objects[0] instanceof Chord.Mode mode && objects[1] instanceof String s) {
+        if (objects.length == 2 && objects[0] instanceof ChordMode mode && objects[1] instanceof String s) {
             ExerciseNote note = ExerciseNote.getByName(s);
             if (note != null)
                 return new Chord(mode, note);

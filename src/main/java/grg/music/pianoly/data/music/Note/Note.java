@@ -1,5 +1,7 @@
 package grg.music.pianoly.data.music.Note;
 
+import org.jetbrains.annotations.Nullable;
+
 public abstract class Note {
 
     public static final char[] NAMES = {'C', '?', 'D', '?', 'E', 'F', '?', 'G', '?', 'A', '?', 'B'};
@@ -12,8 +14,8 @@ public abstract class Note {
         this.key = key;
     }
 
-    public boolean isKeyEqual(Note note) {
-        return this.key % 12 == note.key % 12;
+    public boolean isKeyEqual(@Nullable Note note) {
+        return note != null && this.key % 12 == note.key % 12;
     }
 
     public int getKey() {
