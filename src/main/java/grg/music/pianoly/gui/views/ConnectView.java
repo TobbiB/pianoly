@@ -169,7 +169,7 @@ public class ConnectView extends PageView {
                 Label label = new Label(input.get());
                 label.setPrefSize(WIDTH, HEIGHT);
                 label.setAlignment(Pos.CENTER);
-                FXUtils.setBorderColor(label, Color.BLACK);
+                FXUtils.setBorder(label, Color.BLACK, StudentsView.BORDER_RADII);
                 grid.getChildren().removeIf(node -> GridPane.getColumnIndex(node) == cell.get()[0]
                         && GridPane.getRowIndex(node) == cell.get()[1]);
                 grid.add(label, cell.get()[0], cell.get()[1]);

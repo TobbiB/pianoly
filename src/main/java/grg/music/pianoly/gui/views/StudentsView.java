@@ -11,6 +11,7 @@ import javafx.geometry.Pos;
 import javafx.scene.control.Label;
 import javafx.scene.layout.GridPane;
 import javafx.scene.paint.Color;
+import javafx.scene.text.TextAlignment;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -23,6 +24,7 @@ public class StudentsView {
     record StudentCell(@NotNull String name, int column, int row) {
     }
 
+    public static final int BORDER_RADII = 10;
 
     private static final int WIDTH = 150, HEIGHT = 75;
 
@@ -49,7 +51,7 @@ public class StudentsView {
                 label.setPrefSize(WIDTH, HEIGHT);
                 label.setAlignment(Pos.CENTER);
                 label.setDisable(true);
-                FXUtils.setBorderColor(label, Color.BLACK);
+                FXUtils.setBorder(label, Color.BLACK, 0);
                 this.grid.add(label, c, r);
             }
         }
@@ -61,7 +63,8 @@ public class StudentsView {
             Label label = new Label(student.name());
             label.setPrefSize(WIDTH, HEIGHT);
             label.setAlignment(Pos.CENTER);
-            FXUtils.setBorderColor(label, Color.BLACK);
+            label.setTextAlignment(TextAlignment.CENTER);
+            FXUtils.setBorder(label, Color.BLACK, BORDER_RADII);
             this.grid.add(label, student.column(), student.row());
             this.labels.add(label);
 
@@ -71,32 +74,35 @@ public class StudentsView {
 
     public void onClose() {
         STUDENTS_VIEWS.remove(this);
+        StudentsView view = CollectionUtils.find(STUDENTS_VIEWS, studentsView -> studentsView.exercise == null);
+        if (view != null)
+            view.updateLabels();
     }
 
 
     private void changeLabel(@NotNull String student) {
         int i = STUDENTS.indexOf(CollectionUtils.find(STUDENTS, info -> student.equals(info.name())));
-        if (i >= 0 && i < EXERCISE_INDICES.length && EXERCISE_INDICES[i] <= EXERCISES.size() + 1
-                && EXERCISE_INDICES[i] > 0 && !EXERCISES.isEmpty()) {
+        if (i >= 0 && i < EXERCISE_INDICES.length) {
             Label label = this.labels.get(i);
-            Exercise<?> ex = (EXERCISE_INDICES[i] <= EXERCISES.size()) ? EXERCISES.get(EXERCISE_INDICES[i] - 1) : null;
-            if (this.exercise == null) {
-                Platform.runLater(() -> {
-                    label.setText(student + " (" + (EXERCISE_INDICES[i] + ((ex != null) ? 0 : -1) + ")"
-                            + "\n" + ((ex != null) ?  ex.id() : "Finished")));
-                    FXUtils.setBorderColor(label, ex != null ? ex.color() : Color.GREEN);
-                });
+            if (EXERCISE_INDICES[i] <= EXERCISES.size() + 1 && EXERCISE_INDICES[i] > 0 && !EXERCISES.isEmpty()) {
+                Exercise<?> ex = (EXERCISE_INDICES[i] <= EXERCISES.size()) ? EXERCISES.get(EXERCISE_INDICES[i] - 1) : null;
+                if (this.exercise == null) {
+                    Platform.runLater(() -> {
+                        label.setText(student + " (" + (EXERCISE_INDICES[i] + ((ex != null) ? 0 : -1) + ")"
+                                + "\n" + ((ex != null) ? ex.toString() : "Finished")));
+                        FXUtils.setBorder(label, ex != null ? ex.color() : Color.GREEN, BORDER_RADII);
+                    });
+                } else
+                    Platform.runLater(() -> {
+                        label.setText(student);
+                        if (EXERCISES.indexOf(this.exercise) < EXERCISE_INDICES[i] - 1)
+                            FXUtils.setBorder(label, Color.GREEN, BORDER_RADII);
+                        else if (EXERCISES.indexOf(this.exercise) > EXERCISE_INDICES[i] - 1)
+                            FXUtils.setBorder(label, Color.RED, BORDER_RADII);
+                        else
+                            FXUtils.setBorder(label, Color.BLACK, BORDER_RADII);
+                    });
             }
-            else
-                Platform.runLater(() -> {
-                    label.setText(student);
-                    if (EXERCISES.indexOf(this.exercise) < EXERCISE_INDICES[i] - 1)
-                        FXUtils.setBorderColor(label, Color.GREEN);
-                    else if (EXERCISES.indexOf(this.exercise) > EXERCISE_INDICES[i] - 1)
-                        FXUtils.setBorderColor(label, Color.RED);
-                    else
-                        FXUtils.setBorderColor(label, Color.BLACK);
-                });
         }
     }
 
@@ -104,7 +110,7 @@ public class StudentsView {
         StudentsView view = CollectionUtils.find(STUDENTS_VIEWS, studentsView -> studentsView.exercise == null);
         for (StudentCell student : STUDENTS) {
             this.changeLabel(student.name());
-            if (view != null)
+            if (view != null && !view.equals(this))
                 view.changeLabel(student.name());
         }
     }
@@ -127,8 +133,8 @@ public class StudentsView {
         STUDENTS_VIEWS.removeIf(view -> view.exercise == null);
     }
 
-    public static List<Exercise<?>> getExercises() {
-        return EXERCISES;
+    public static void addExercise(@NotNull Exercise<?> exercise) {
+        EXERCISES.add(exercise);
     }
 
     public static void setGridData(@NotNull List<StudentCell> students, int columns, int rows) {

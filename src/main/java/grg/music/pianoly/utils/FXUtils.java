@@ -1,10 +1,12 @@
 package grg.music.pianoly.utils;
 
+import javafx.geometry.Insets;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.ToggleGroup;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 public final class FXUtils {
 
@@ -20,8 +22,16 @@ public final class FXUtils {
         return buttons;
     }
 
-    public static void setBorderColor(@NotNull Region node, @NotNull Color color) {
-        node.setBorder(new Border(new BorderStroke(color,
-                BorderStrokeStyle.SOLID, CornerRadii.EMPTY, BorderWidths.DEFAULT)));
+    public static void setBorder(@NotNull Region node, @Nullable Color color, @NotNull BorderStrokeStyle style, int radii) {
+        node.setBorder((color == null) ? Border.EMPTY : new Border(
+                new BorderStroke(color, style, new CornerRadii(radii / 100f, true), BorderWidths.DEFAULT)));
+    }
+
+    public static void setBorder(@NotNull Region node, @Nullable Color color, int radii) {
+        setBorder(node, color, BorderStrokeStyle.SOLID, radii);
+    }
+
+    public static void setBackgroundColor(@NotNull Region node, @NotNull Color color, double radii) {
+        node.setBackground(new Background(new BackgroundFill(color, new CornerRadii(radii), new Insets(0))));
     }
 }

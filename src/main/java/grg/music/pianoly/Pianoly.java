@@ -7,6 +7,8 @@ import javafx.application.Application;
 import javafx.stage.Stage;
 import org.jetbrains.annotations.NotNull;
 
+import java.util.Locale;
+
 public class Pianoly extends Application {
 
     @Override
@@ -20,6 +22,7 @@ public class Pianoly extends Application {
 
         // TODO
         new Test();
+        Locale.setDefault(Locale.ENGLISH);
 
     }
 

@@ -9,9 +9,12 @@ import grg.music.pianoly.gui.GUI;
 import grg.music.pianoly.utils.FXUtils;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
+import javafx.geometry.Insets;
 import javafx.scene.control.*;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
+import javafx.scene.paint.Color;
 
 import java.util.Collections;
 import java.util.LinkedList;
@@ -27,14 +30,13 @@ public class ExerciseView extends PageView {
     @FXML private TabPane tabPane;
     @FXML private ComboBox<ExerciseMode> mode;
     @FXML private HBox specsBox;
-    @FXML private Label preview;
     @FXML private ColorPicker color;
+    @FXML private Label preview;
     @FXML private Button save;
 
     @FXML private Button back, startStop;
 
     private final List<ComboBox<?>> specs = new LinkedList<>();
-    private String name;
 
 
     @Override
@@ -44,6 +46,7 @@ public class ExerciseView extends PageView {
         this.mode.setItems(FXCollections.observableArrayList(ExerciseMode.values()));
         this.mode.setValue(ExerciseMode.NOTE);
         this.onModeChanged();
+        this.preview.setPadding(new Insets(1));
     }
 
     @Override
@@ -89,20 +92,31 @@ public class ExerciseView extends PageView {
     @FXML
     private void onSave() {
         this.update();
-        Exercise<ExerciseMode> exercise = new Exercise<>(this.mode.getValue(), this.color.getValue(), this.name);
+        Object[] objects = new Object[this.specs.size()];
+        for (int i = 0; i < this.specs.size(); i++)
+            objects[i] = this.specs.get(i).getValue();
+        Exercise<ExerciseMode> exercise = new Exercise<>(this.mode.getValue(), this.color.getValue(), objects);
         GUI.getInstance().getOut().exerciseCreated(exercise);
-        StudentsView.getExercises().add(exercise);
+        StudentsView.addExercise(exercise);
         StudentsView students = StudentsView.load(exercise);
         if (students == null)
             return;
         students.updateLabels();
-        Tab tab = new Tab(this.name);
+
+        Label label = new Label("♪");
+        label.setGraphic(new ImageView(exercise.mode().getImage()));
+        FXUtils.setBorder(label, exercise.color(), 20);
+        label.setPadding(new Insets(1));
+
+        Tab tab = new Tab(exercise.toString());
+        tab.setGraphic(label);
         tab.setContent(students.getGrid());
         tab.setId(String.valueOf(this.tabPane.getTabs().size() - 2));
         tab.setOnSelectionChanged(event -> this.onSelect());
+        // TODO
+        tab.setClosable(false);
         tab.setOnClosed(event -> {
             GUI.getInstance().getOut().exerciseClosed(Integer.parseInt(tab.getId()));
-            StudentsView.getExercises().remove(exercise);
             students.onClose();
         });
         this.tabPane.getTabs().add(tab);
@@ -125,20 +139,22 @@ public class ExerciseView extends PageView {
 
     @FXML
     private void update() {
-        String base = "To Play: ";
         switch (this.mode.getValue()) {
             //case FREE -> this.preview.setText(base + "Free");
-            case NOTE, INTERVAL -> this.preview.setText(base + this.specs.get(0).getValue());
-            case CHORD -> this.preview.setText(base + this.specs.get(1).getValue()
+            case NOTE, INTERVAL -> this.preview.setText("" + this.specs.get(0).getValue());
+            case CHORD -> this.preview.setText("" + this.specs.get(1).getValue()
                     + ((Chord.Mode) this.specs.get(0).getValue()).getSymbol());
         }
-        if (this.preview.getText().contains("null"))
-            this.preview.setText(base + "<not specified>");
-        else
-            this.name = this.mode.getValue() + ": " + this.preview.getText().replaceAll(base, "");
+        boolean saveable = true;
+        if (this.preview.getText().contains("null")) {
+            this.preview.setText("<not specified>");
+            saveable = false;
+        }
+        //else
+            //this.name = this.mode.getValue() + ": " + this.preview.getText().replaceAll(base, "");
 
-        FXUtils.setBorderColor(this.preview, this.color.getValue());
-        this.save.setDisable(this.preview.getText().equals(base + "<not specified>"));
+        FXUtils.setBorder(this.preview, (saveable) ? this.color.getValue() : null, 20);
+        this.save.setDisable(!saveable || this.color.getValue().equals(Color.WHITE));
     }
 
     private void setUpDownSelection(int index) {
