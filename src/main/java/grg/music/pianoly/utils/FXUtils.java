@@ -31,7 +31,7 @@ public final class FXUtils {
         setBorder(node, color, BorderStrokeStyle.SOLID, radii);
     }
 
-    public static void setBackgroundColor(@NotNull Region node, @NotNull Color color, double radii) {
-        node.setBackground(new Background(new BackgroundFill(color, new CornerRadii(radii), new Insets(0))));
+    public static void setBackgroundColor(@NotNull Region node, @NotNull Color color, int radii) {
+        node.setBackground(new Background(new BackgroundFill(color, new CornerRadii(radii / 100f), new Insets(0))));
     }
 }

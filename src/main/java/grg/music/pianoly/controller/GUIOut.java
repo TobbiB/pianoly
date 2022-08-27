@@ -1,7 +1,6 @@
 package grg.music.pianoly.controller;
 
 import grg.music.pianoly.data.exercises.Exercise;
-import grg.music.pianoly.data.exercises.ExerciseMode;
 import grg.music.pianoly.gui.interfaces.IGUIOut;
 import grg.music.pianoly.model.Model;
 import org.jetbrains.annotations.NotNull;
@@ -28,6 +27,6 @@ public class GUIOut implements IGUIOut {
 
     @Override
     public void exerciseCreated(@NotNull Exercise<?> exercise) {
-        Model.getInstance().getExercises().add(exercise);
+        this.model.getExercises().add(exercise);
     }
 }

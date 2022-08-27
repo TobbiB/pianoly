@@ -12,7 +12,7 @@ import org.jetbrains.annotations.NotNull;
 
 public final class GUI {
 
-    private static GUI instance;
+    private static GUI INSTANCE;
 
     private final IGUIOut out = new GUIOut();
     private final IGUIIn in = new GUIIn();
@@ -21,7 +21,7 @@ public final class GUI {
 
 
     private GUI() {
-        instance = this;
+        INSTANCE = this;
     }
 
     public void createWindow(@NotNull Stage stage) {
@@ -55,6 +55,6 @@ public final class GUI {
 
     @NotNull
     public static GUI getInstance() {
-        return (instance == null) ? new GUI() : instance;
+        return (INSTANCE == null) ? new GUI() : INSTANCE;
     }
 }

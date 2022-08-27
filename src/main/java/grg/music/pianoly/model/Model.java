@@ -8,14 +8,14 @@ import java.util.List;
 
 public final class Model {
 
-    private static Model instance;
+    private static Model INSTANCE;
 
     private final List<Exercise<?>> exercises = new LinkedList<>();
     private final StudentsManager studentsManager = new StudentsManager();
 
 
     private Model() {
-        instance = this;
+        INSTANCE = this;
     }
 
 
@@ -29,6 +29,6 @@ public final class Model {
 
 
     public static Model getInstance() {
-        return (instance == null) ? new Model() : instance;
+        return (INSTANCE == null) ? new Model() : INSTANCE;
     }
 }

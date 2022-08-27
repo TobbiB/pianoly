@@ -1,6 +1,7 @@
 package grg.music.pianoly.data.music.Note;
 
 import grg.music.pianoly.data.music.MusicElement;
+import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
@@ -16,7 +17,7 @@ public class ExerciseNote extends Note implements MusicElement {
 
 
     @Override
-    public boolean checkCompleted(List<DeviceNote> notes) {
+    public boolean checkCompleted(@NotNull List<DeviceNote> notes) {
         return notes.size() == 1 && notes.get(0).isKeyEqual(this);
     }
 
@@ -34,7 +35,7 @@ public class ExerciseNote extends Note implements MusicElement {
     }
 
     @Nullable
-    public static ExerciseNote getByName(String name) {
+    public static ExerciseNote getByName(@Nullable String name) {
         for (int i = 0; i < NAMES_UP.length; i++) {
             if (NAMES_UP[i].equals(name))
                 return getExerciseNote(i, true);

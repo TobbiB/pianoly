@@ -29,7 +29,7 @@ public enum Interval implements MusicElement {
     private final String name;
 
     @Override
-    public boolean checkCompleted(List<DeviceNote> notes) {
+    public boolean checkCompleted(@NotNull List<DeviceNote> notes) {
         return notes.size() == 2 && Math.abs(notes.get(0).getKey() - notes.get(1).getKey()) == this.getIndex();
     }
 

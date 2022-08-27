@@ -39,8 +39,7 @@ public class StudentsView {
     private Exercise<?> exercise;
 
 
-    @FXML
-    private GridPane grid;
+    @FXML private GridPane grid;
 
     @FXML
     private void initialize() {

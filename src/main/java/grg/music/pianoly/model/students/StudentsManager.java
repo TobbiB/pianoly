@@ -2,12 +2,10 @@ package grg.music.pianoly.model.students;
 
 import grg.music.pianoly.controller.DeviceOut;
 import grg.music.pianoly.gui.GUI;
-import grg.music.pianoly.gui.views.StudentsView;
 import grg.music.pianoly.model.students.interfaces.IDeviceIn;
 import grg.music.pianoly.model.students.interfaces.IDeviceOut;
 import grg.music.pianoly.test.CLIDeviceIn;
 
-import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -18,10 +16,6 @@ public class StudentsManager {
     private boolean started = false;
 
     public StudentsManager() {
-        // TODO
-        this.students = new ArrayList<>();
-        for (int i = 0; i < 4; i++)
-            this.students.add(new Student("test" + i, DeviceOut.getDevices()[i], CLIDeviceIn.getDevices()[i]));
     }
 
     public void setupStudents() {
