@@ -1,6 +1,6 @@
 package grg.music.pianoly.data.music;
 
-import grg.music.pianoly.data.music.Note.DeviceNote;
+import grg.music.pianoly.data.music.note.DeviceNote;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.List;

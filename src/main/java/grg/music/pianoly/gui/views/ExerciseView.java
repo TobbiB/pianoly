@@ -2,10 +2,10 @@ package grg.music.pianoly.gui.views;
 
 import grg.music.pianoly.data.exercises.Exercise;
 import grg.music.pianoly.data.exercises.ExerciseMode;
-import grg.music.pianoly.data.music.Chord.ChordMode;
-import grg.music.pianoly.data.music.Interval.Interval;
+import grg.music.pianoly.data.music.chord.ChordMode;
+import grg.music.pianoly.data.music.interval.Interval;
 import grg.music.pianoly.data.music.MusicElement;
-import grg.music.pianoly.data.music.Note.Note;
+import grg.music.pianoly.data.music.note.Note;
 import grg.music.pianoly.gui.GUI;
 import grg.music.pianoly.utils.FXUtils;
 import javafx.collections.FXCollections;
@@ -107,7 +107,6 @@ public class ExerciseView extends PageView {
             return;
         students.updateLabels();
 
-        // TODO
         Label label = new Label("♪");
         label.setGraphic(new ImageView(this.mode.getValue().getImage()));
         FXUtils.setBorder(label, exercise.color(), 20);
@@ -118,7 +117,7 @@ public class ExerciseView extends PageView {
         tab.setContent(students.getGrid());
         tab.setId(String.valueOf(this.tabPane.getTabs().size() - 2));
         tab.setOnSelectionChanged(event -> this.onSelect());
-        // TODO
+
         tab.setClosable(false);
         tab.setOnClosed(event -> students.onClose());
         this.tabPane.getTabs().add(tab);
@@ -142,7 +141,6 @@ public class ExerciseView extends PageView {
     @FXML
     private void update() {
         switch (this.mode.getValue()) {
-            //case FREE -> this.preview.setText(base + "Free");
             case NOTE, INTERVAL -> this.preview.setText("" + this.specs.get(0).getValue());
             case CHORD -> this.preview.setText("" + this.specs.get(1).getValue()
                     + ((ChordMode) this.specs.get(0).getValue()).getSymbol());

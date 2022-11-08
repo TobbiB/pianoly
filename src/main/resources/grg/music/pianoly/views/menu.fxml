@@ -16,7 +16,7 @@
             </Label>
             <Button fx:id="connect" onAction="#onConnect" prefHeight="50" prefWidth="200" text="Connect Devices"/>
             <Button fx:id="exercise" onAction="#onExercises" prefHeight="50" prefWidth="200" text="Exercises"/>
-            <Button fx:id="settings" onAction="#onSettings" prefHeight="50" prefWidth="200" text="Settings"/>
+            <!--Button fx:id="settings" onAction="#onSettings" prefHeight="50" prefWidth="200" text="Settings"/-->
             <Button fx:id="close" onAction="#onCloseClicked" prefHeight="50" prefWidth="200" text="Close"/>
         </FlowPane>
     </center>

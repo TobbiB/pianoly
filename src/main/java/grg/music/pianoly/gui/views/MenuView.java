@@ -37,7 +37,6 @@ public class MenuView extends PageView {
 
     @FXML
     private void onSettings() {
-        // TODO
     }
 
     @FXML

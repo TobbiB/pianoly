@@ -1,6 +1,6 @@
 package grg.music.pianoly.test;
 
-import grg.music.pianoly.data.music.Note.DeviceNote;
+import grg.music.pianoly.data.music.note.DeviceNote;
 import grg.music.pianoly.model.settings.Settings;
 import grg.music.pianoly.model.students.interfaces.IDeviceIn;
 import org.jetbrains.annotations.NotNull;

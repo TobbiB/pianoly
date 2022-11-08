@@ -1,6 +1,6 @@
 package grg.music.pianoly.controller;
 
-import grg.music.pianoly.data.music.Note.DeviceNote;
+import grg.music.pianoly.data.music.note.DeviceNote;
 import grg.music.pianoly.model.settings.Settings;
 import grg.music.pianoly.model.students.interfaces.IDeviceIn;
 import org.jetbrains.annotations.NotNull;
@@ -19,14 +19,19 @@ public record DeviceIn(MidiDevice midiDevice) implements IDeviceIn {
 
     @Override
     public boolean waitForInput() {
+        Thread thread = Thread.currentThread();
         AtomicBoolean b = new AtomicBoolean(false);
         try {
             this.midiDevice.open();
             this.midiDevice.getTransmitter().setReceiver(new Receiver() {
                 @Override
                 public void send(MidiMessage message, long timeStamp) {
-                    b.set(true);
-                    Thread.currentThread().notify();
+                    if (message instanceof ShortMessage sm && sm.getCommand() == ShortMessage.NOTE_ON) {
+                        b.set(true);
+                        synchronized (thread) {
+                            thread.notify();
+                        }
+                    }
                 }
 
                 @Override
@@ -36,9 +41,9 @@ public record DeviceIn(MidiDevice midiDevice) implements IDeviceIn {
         } catch (MidiUnavailableException e) {
             e.printStackTrace();
         }
-        synchronized (Thread.currentThread()) {
+        synchronized (thread) {
             try {
-                Thread.currentThread().wait(Settings.CONNECT_COOLDOWN.getValue() * 1000);
+                thread.wait(Settings.CONNECT_COOLDOWN.getValue() * 1000);
             } catch (InterruptedException ignored) {
             }
         }
@@ -64,8 +69,6 @@ public record DeviceIn(MidiDevice midiDevice) implements IDeviceIn {
                             if (!notes.removeIf(n -> n.isKeyEqual(note))) {
                                 if (sm.getCommand() == ShortMessage.NOTE_ON)
                                     notes.add(note);
-                                else
-                                    System.out.println("[WARNING] No note found");
                             }
                             runnable.run();
                         }
@@ -92,8 +95,9 @@ public record DeviceIn(MidiDevice midiDevice) implements IDeviceIn {
         MidiDevice.Info[] infos = MidiSystem.getMidiDeviceInfo();
         for (MidiDevice.Info info : infos) {
             try {
-                if (MidiSystem.getMidiDevice(info).getTransmitter() != null)
+                if (MidiSystem.getMidiDevice(info).getTransmitter() != null) {
                     devices.add(new DeviceIn(MidiSystem.getMidiDevice(info)));
+                }
             } catch (MidiUnavailableException ignored) {
             }
         }

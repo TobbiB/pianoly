@@ -6,6 +6,7 @@ module grg.music.pianoly {
     requires javafx.fxml;
     requires javafx.controls;
     requires org.jetbrains.annotations;
+    requires jdk.httpserver;
 
 
     exports grg.music.pianoly;

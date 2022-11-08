@@ -7,7 +7,6 @@ import javafx.stage.Screen;
 import java.util.LinkedList;
 import java.util.List;
 
-// TODO
 public class DeviceOut implements IDeviceOut {
 
     private final int id;

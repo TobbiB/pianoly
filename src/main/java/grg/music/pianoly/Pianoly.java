@@ -20,8 +20,7 @@ public class Pianoly extends Application {
         gui.createWindow(stage);
         gui.setMainPage();
 
-        // TODO
-        new Test();
+        //new Test();
         Locale.setDefault(Locale.ENGLISH);
 
     }

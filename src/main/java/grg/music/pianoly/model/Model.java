@@ -2,6 +2,7 @@ package grg.music.pianoly.model;
 
 import grg.music.pianoly.data.exercises.Exercise;
 import grg.music.pianoly.model.students.StudentsManager;
+import grg.music.pianoly.model.web.Web;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -16,6 +17,8 @@ public final class Model {
 
     private Model() {
         INSTANCE = this;
+
+        Web.initialize();
     }
 
 

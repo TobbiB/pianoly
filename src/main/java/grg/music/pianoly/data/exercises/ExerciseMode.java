@@ -1,10 +1,10 @@
 package grg.music.pianoly.data.exercises;
 
-import grg.music.pianoly.data.music.Chord.Chord;
-import grg.music.pianoly.data.music.Chord.ChordMode;
-import grg.music.pianoly.data.music.Interval.Interval;
+import grg.music.pianoly.data.music.chord.Chord;
+import grg.music.pianoly.data.music.chord.ChordMode;
+import grg.music.pianoly.data.music.interval.Interval;
 import grg.music.pianoly.data.music.MusicElement;
-import grg.music.pianoly.data.music.Note.ExerciseNote;
+import grg.music.pianoly.data.music.note.ExerciseNote;
 import javafx.scene.image.Image;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -15,8 +15,6 @@ import java.util.function.Function;
 
 public enum ExerciseMode {
 
-    // TODO
-    //FREE("Free"),
     NOTE("Note", new Image(new ByteArrayInputStream("♪".getBytes(StandardCharsets.UTF_8))),
             objects -> (objects[0] instanceof String s) ? ExerciseNote.getByName(s) : null),
     INTERVAL("Interval", new Image(new ByteArrayInputStream("♫".getBytes(StandardCharsets.UTF_8))),
